@@ -18,7 +18,6 @@ class Home extends CI_Controller {
         $data['title']='哈尔滨醇正醇酒曲厂';
         $data['sysinfo']=$this->database->getsysinfo();
         $data['news']=$this->database->getnewslist_top(4);
-        p($data['news']);
         $this->load->view('header.html',$data);
         $this->load->view('index/nav.html');
         $this->load->view('index/ad.html');
@@ -135,8 +134,6 @@ class Home extends CI_Controller {
             error('参数错误');
         }
         $data['displayInfo']=$this->database->getDisplayInfo('content',$rowid);
-        p($data['displayInfo']);
-        $data['displayInfo']=$data['displayInfo'][0]['profile'];
         $this->load->view('header.html',$data);
         $this->load->view('index/nav.html');
         $this->load->view('index/ad.html');

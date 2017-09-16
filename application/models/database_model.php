@@ -47,11 +47,11 @@ class Database_model extends CI_Model{
         return $data;
     }
     public function getnewslist(){
-        $data=$this->db->select('rowid,title,addDate,modDate,author,source,clicks')->where(array('rectype'=>'news'))-> get('content')->result_array();
+        $data=$this->db->select('rowid,title,addDate,modDate,author,source,clicks')->where(array('rectype'=>'news'))->order_by('modDate','desc')-> get('content')->result_array();
         return $data;
     }
     public function getnewslist_top($num){
-        $data=$this->db->select('rowid,title,modDate')->limit($num)->where(array('rectype'=>'news'))-> get('content')->result_array();
+        $data=$this->db->select('rowid,title,modDate')->limit($num)->where(array('rectype'=>'news'))->order_by('modDate','desc')-> get('content')->result_array();
         return $data;
     }
     public function getnews($rowid){
