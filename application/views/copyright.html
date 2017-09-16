@@ -1,11 +1,11 @@
 <div class="copyright">
     <ul>
-        <li>公司名称：哈尔滨醇正醇酒曲厂</li>
-        <li>公司地址：黑龙江省哈尔滨市动力区旭升街3-1号</li>
-        <li>公司邮编：150040</li>
-        <li>联系电话：(0451)82161658&nbsp;&nbsp;&nbsp;82160468 </li>
-        <li>节假日及夜间值班电话：13946021608</li>
-        <li>公司主页：http://www.hrbczc.com</li>
+        <li>公司名称：<?php echo isset($sysinfo) ?$sysinfo[0]['corporation']:'' ?></li>
+        <li>公司地址：<?php echo isset($sysinfo) ?$sysinfo[0]['address']:'' ?></li>
+        <li>公司邮编：<?php echo isset($sysinfo) ?$sysinfo[0]['postcode']:'' ?></li>
+        <li>联系电话：<?php echo isset($sysinfo) ?$sysinfo[0]['phone']:'' ?></li>
+        <li>值班电话：<?php echo isset($sysinfo) ?$sysinfo[0]['servphone']:'' ?></li>
+        <li>公司主页：<?php echo isset($sysinfo) ?$sysinfo[0]['url']:'' ?></li>
     </ul>
 
 </div>

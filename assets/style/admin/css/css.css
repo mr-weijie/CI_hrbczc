@@ -1,0 +1,27 @@
+body{ font-size: 14px; margin: 0px;margin-bottom: 30px;background-color: #D0D0D0}
+li{ list-style: none}
+
+.flash_side{width: 100%;height: 700px;}
+.con li{ margin-top: 0px;margin-top: 5px;}
+.admin_input{border: 1px solid;border-color: #4F97E9;width: 30px;margin-top: 10px;}
+.admin_input_title{border: 1px solid;border-color: #4F97E9;width: 130px;margin-top: 10px;}
+.admin_input_normal{border: 1px solid;border-color: #4F97E9;width:300px;margin-top: 10px;height: 25px;}
+.admin_input_link{border: 1px solid;border-color: #4F97E9;width: 500px;margin-top: 10px;height: 25px;}
+.sysinfo_area{border: 1px solid;border-color: #4F97E9}
+
+.proudct_rec{ width: 800px;height: 190px;text-align: center; border: 1px dashed ;border-color: #dddddd;margin-top: 5px;}
+.proudct_rec h1{font-size: 14px;}
+.proudct_pic{width: 230px;height: 160px;float: left;margin-top: 20px; }
+.proudct_profile{width: 490px;height: 190px;float: left;padding-top: 10px;text-align: left}
+.news-total{width: 350px;height: 35px;line-height: 35px;float: left;}
+.news-pages{width: 370px;height: 35px;line-height: 35px;float: left;text-align: right}
+
+.con ul{padding-left: 5px}
+.rec{width: 800px;height: 30px; }
+.head{background-color: #D0D0D0}
+.rec .title{width: 560px;height: 30px;line-height:30px;float: left}
+.rec .date{width: 120px;height: 30px;line-height: 30px;float: left}
+.rec .action{width: 120px;height: 30px;line-height: 30px;float: left}
+.rec .total{width: 300px;height: 30px;line-height: 30px;float: left}
+.rec .pages{width: 420px;height: 30px;line-height: 30px;float: left}
+.rec .pages a{margin-left: 10px}

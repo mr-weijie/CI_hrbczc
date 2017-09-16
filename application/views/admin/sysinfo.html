@@ -4,22 +4,20 @@
     $url        =$sysinfo[0]['url'];
     $corporation=$sysinfo[0]['corporation'];
     $phone      =$sysinfo[0]['phone'];
-    $qq         =$sysinfo[0]['qq'];
-    $worktime   =$sysinfo[0]['worktime'];
-    $gonggao    =$sysinfo[0]['gonggao'];
+    $servphone  =$sysinfo[0]['servphone'];
+    $postcode   =$sysinfo[0]['postcode'];
     ?>
 
 <div class="flash_side">
     <div class="con" >
         <ul>
         <form name="form1" method="post" action="<?php echo site_url('admin/update_sysinfo') ?>">
+            <li>公司名称:<input type="text" name="corporation" class="admin_input_normal" value="<?php echo $corporation ?>"></li>
             <li>公司地址:<input type="text" name="address" class="admin_input_normal" value="<?php echo $address ?>"><input type="hidden" name="ID" value="<?php echo $ID?>"></li>
             <li>公司网址:<input type="text" name="url" class="admin_input_normal" value="<?php echo $url ?>"></li>
-            <li>公司名称:<input type="text" name="corporation" class="admin_input_normal" value="<?php echo $corporation ?>"></li>
             <li>公司电话:<input type="text" name="phone" class="admin_input_normal" value="<?php echo $phone ?>"></li>
-            <li>公司&nbsp;&nbsp;QQ:<input type="text" name="qq" class="admin_input_normal" value="<?php echo $qq ?>"></li>
-            <li>工作时间:<input type="text" name="worktime" class="admin_input_normal" value="<?php echo $worktime ?>"></li>
-            <li>公司公告:<textarea name="gonggao" rows="5" cols="50" class="sysinfo_area"><?php echo $gonggao ?></textarea> </li>
+            <li>值班电话:<input type="text" name="servphone" class="admin_input_normal" value="<?php echo $servphone ?>"></li>
+            <li>公司邮编:<input type="text" name="postcode" class="admin_input_normal" value="<?php echo $postcode ?>"></li>
             <li><input type="submit" value="提交"></li>
         </form>
         </ul>

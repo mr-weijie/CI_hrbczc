@@ -11,7 +11,7 @@
                 <?php foreach($projects as $item):
                 $type=$item['Type'];
                 $url=($type=='proc')? site_url('home/'.$item['Content']):site_url('home/'.$item['Class'].'/'.$item['rowid']);
-                $curitem=isset($curitem) ?$curitem:'';
+                $curitem=isset($ContentInfo) ?$ContentInfo[0]['Title']:'';
                 ?>
                     <a href="<?php echo $url?>" <?php if($curitem==$item['Title']) echo 'style="color:#FF0000"'?>>
                         <li class="project-title">
@@ -25,9 +25,9 @@
     </div>
     <div class="show-right">
         <div class="article-title">
-            <h1 style="height: 35px;line-height: 35px; font-size: 16px;margin-top: 0px;color: #0767b1;padding-left: 20px"><?php echo (isset($ContentTitle))? $ContentTitle:''?></h1>
+            <h1 style="height: 35px;line-height: 35px; font-size: 16px;margin-top: 0px;color: #0767b1;padding-left: 20px"><?php echo (isset($ContentInfo))? $ContentInfo[0]['Title']:''?></h1>
             <p style="padding-left: 0px">
-                <?php echo (isset($Content))? $Content:''?>
+                <?php echo (isset($ContentInfo))? $ContentInfo[0]['Content']:''?>
             </p>
         </div>
 

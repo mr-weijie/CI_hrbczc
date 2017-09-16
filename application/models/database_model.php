@@ -20,5 +20,58 @@ class Database_model extends CI_Model{
         return $data;
 
     }
+    public function getsysinfo(){
+        $data=$this->db->get('sysinfo')->result_array();
+        return $data;
+    }
+
+    public function getContentInfo($table,$rowid){
+        $data=$this->db->select('rowid,Title,Content')->where(array('rowid'=>$rowid))->get($table)->result_array();
+        return $data;
+    }
+    public function update_sysinfo($data,$rowid){
+        $status=$this->db->update('sysinfo',$data,array('rowid'=>$rowid));
+        return $status;
+    }
+    public function updateprofilepic($rowid,$photofile){
+        $data=array(
+            'profile_pic'=>$photofile
+        );
+        $status=$this->db->update('sysinfo',$data,array('rowid'=>$rowid));
+        return $status;
+
+    }
+    public function getDisplayInfo($tablename,$rowid){
+        $data=$this->db->where(array('rowid'=>$rowid))->get($tablename)->result_array();
+       // p($data);
+        return $data;
+    }
+    public function getnewslist(){
+        $data=$this->db->select('rowid,title,addDate,modDate,author,source,clicks')->where(array('rectype'=>'news'))-> get('content')->result_array();
+        return $data;
+    }
+    public function getnewslist_top($num){
+        $data=$this->db->select('rowid,title,modDate')->limit($num)->where(array('rectype'=>'news'))-> get('content')->result_array();
+        return $data;
+    }
+    public function getnews($rowid){
+        $data=$this->db->where(array('rowid'=>$rowid))->get('content')->result_array();
+        return $data;
+    }
+    public function update_content($rowid,$data){
+        $status=$this->db->update('content',$data,array('rowid'=>$rowid));
+        return $status;
+
+    }
+    public function deletenews($rowid){
+        $status=$this->db->delete('content',array('rowid'=>$rowid));
+        return $status;
+    }
+    public function insertnews($data){
+        $status=$this->db->insert('content',$data);
+        return $data;
+    }
+
+
 
 }

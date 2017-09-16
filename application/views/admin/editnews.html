@@ -30,8 +30,8 @@
     <div class="con">
           <form name="form1" id="form1" method="post" action="<?php echo site_url('admin/updatenews')?>">
            <ul>
-                <li>原创标题:<input type="text" class="admin_input_normal" name="title" value="<?php echo $news[0]['title']?>"></li>
-                <li><span style="float: left; clear: both">原创内容:</span><span style="float: left"><textarea name="content" id="content" style="width: 818px;height: 300px; border: 1px solid;border-color: #3B96CB;"><?php echo $news[0]['content']?></textarea></span></li>
+                <li>新闻标题:<input type="text" class="admin_input_normal" name="title" value="<?php echo $news[0]['title']?>"></li>
+                <li><span style="float: left; clear: both">新闻内容:</span><span style="float: left"><textarea name="content" id="content" style="width: 818px;height: 300px; border: 1px solid;border-color: #3B96CB;"><?php echo $news[0]['content']?></textarea></span></li>
             </ul>
             <div style="width:820px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 65px;clear: both;text-align: center">
                 <input type="hidden" name="rowid" value="<?php echo $news[0]['rowid']?>">

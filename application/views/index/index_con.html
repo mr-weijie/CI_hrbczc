@@ -5,15 +5,15 @@
                 <div class="gsjj_title">
                     <ul>
                         <li class="left">公司简介</li>
-                        <li class="right"><a href="#"> 更多>></a></li>
+                        <li class="right"></li>
                     </ul>
                 </div>
                 <div class="gsjj_pic">
-                    <img src="<?php echo base_url('assets/images/gsjj_pic.gif') ?>" alt="公司简介"width="272" height="86">
+                    <img src="<?php echo base_url('assets/images/'.$sysinfo[0]['profile_pic']) ?>" alt="公司简介"width="272" height="86">
 
                 </div>
                 <div class="gsjj_con">
-                    哈尔滨醇正醇酒曲厂是经国家工商局、卫生局、质量技术监督局批准成立的优秀企业，是集酿酒技术开发、酿酒设备、生料酒曲、熟料酒曲、固液两用多功能酒曲、微生物秸秆饲料发酵剂、白酒净化器,哈
+                    <?php echo chinesesubstr($sysinfo[0]['profile'],1,350)?>......<a href="<?php echo site_url('home/display/sysinfo/'.$sysinfo[0]['rowid']) ?>"> 更多>></a>
                 </div>
 
             </div>
@@ -21,7 +21,7 @@
                 <div class="xwdt_title">
                     <ul>
                         <li class="left">新闻动态</li>
-                        <li class="right"><a href="#"> 更多>></a></li>
+                        <li class="right"></li>
                     </ul>
                 </div>
                 <div class="gszz_pic">
@@ -34,34 +34,18 @@
                 </div>
                 <div class="xwdt_list">
                     <ul>
+                        <?php foreach($news as $item):?>
                         <li>
                             <ul>
-                                <li class="rec-left"><a href="#">黑龙江省高新技术企业</a> </li>
-                                <li class="rec-right">2015-12-09</li>
+                                <li class="rec-left"><a href="<?php echo site_url('home/displayinfo/'.$item['rowid']) ?>"><?php echo $item['title']?></a> </li>
+                                <li class="rec-right"><?php echo date('Y-m-d',$item['modDate'])?></li>
                             </ul>
                         </li>
-                        <li>
-                            <ul>
-                                <li class="rec-left"><a href="#">入围第四届中国创新创业大赛总决赛</a> </li>
-                                <li class="rec-right">2015-12-10</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <ul>
-                                <li class="rec-left"><a href="#">我公司被评为2015年度专利优势示范企业</a> </li>
-                                <li class="rec-right">2015-12-19</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <ul>
-                                <li class="rec-left"><a href="#">新型白酒的勾调技术</a> </li>
-                                <li class="rec-right">2015-12-29</li>
-                            </ul>
-                        </li>
+                        <?php endforeach; ?>
                         <li>
                             <ul>
                                 <li class="rec-left"></li>
-                                <li class="rec-right"><a href="#"> 更多>></a></li>
+                                <li class="rec-right"><a href="<?php echo site_url('home/news') ?>"> 更多>></a></li>
                             </ul>
                         </li>
                     </ul>
