@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>系统后台管理首页</title>
+	<link rel="stylesheet" href="<?php echo base_url('assets/style/admin/css/admin.css')?>" />
+	<script type="text/javascript" src="<?php echo base_url('assets/style/admin/js/jquery-1.7.2.min.js') ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/style/admin/js/admin.js') ?>"></script>
+<!-- 默认打开目标 -->
+<base target="iframe">
+</head>
+<body>
+<!-- 头部 -->
+	<div id="top_box">
+		<div id="top">
+			<p id="top_font">系统管理后台</p>
+		</div>
+		<div class="top_bar">
+			<p class="adm">
+				<span>管理员：</span>
+				<span class="adm_pic">&nbsp&nbsp&nbsp&nbsp</span>
+				<span class="adm_people">[<?php echo $this->session->userdata('usrname') ?>]</span>
+			</p>
+			<p class="now_time">
+				今天是：2014.7.1
+				您的当前位置是：
+				<span>首页</span>
+			</p>
+			<p class="out">
+				<span class="out_bg">&nbsp&nbsp&nbsp&nbsp</span>&nbsp
+				<a href="<?php echo site_url('login/login_out') ?>" target="_self">退出</a>
+			</p>
+		</div>
+	</div>
+<!-- 左侧菜单 -->
+		<div id="left_box">
+			<p class="use">功能管理</p>
+			<div class="menu_box">
+				<h2>系统设置</h2>
+				<div class="text">
+				    <ul class="con">
+				        <li class="nav_u">
+				        	<a href="<?php echo site_url('admin/flash') ?>" class="pos">flash动画设置</a>
+				        </li> 
+				    </ul>
+					<ul class="con">
+				        <li class="nav_u">
+				        	<a href="<?php echo site_url('admin/sysinfo') ?>" class="pos">系统参数</a>
+				        </li> 
+				    </ul>
+
+				</div>
+			</div>	
+			<div class="menu_box">
+				<h2>首页内容</h2>
+				<div class="text">
+					<ul class="con">
+				        <li class="nav_u">
+				        	<a href="<?php echo site_url('admin/products') ?>" class="pos">产品中心</a>
+				        </li> 
+				    </ul>
+				  	<ul class="con">
+				        <li class="nav_u">
+				        	<a href="<?php echo site_url('admin/customized') ?>" class="pos">服务定制</a>
+				        </li> 
+				    </ul>
+					<ul class="con">
+						<li class="nav_u">
+							<a href="<?php echo site_url('admin/agent') ?>" class="pos">代理招商</a>
+						</li>
+					</ul>
+					<ul class="con">
+						<li class="nav_u">
+							<a href="<?php echo site_url('admin/success') ?>" class="pos">成功案例</a>
+						</li>
+					</ul>
+					<ul class="con">
+						<li class="nav_u">
+							<a href="<?php echo site_url('admin/price') ?>" class="pos">产品价格</a>
+						</li>
+					</ul>
+					<ul class="con">
+						<li class="nav_u">
+							<a href="<?php echo site_url('admin/faq') ?>" class="pos">常见问题</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="menu_box">
+				<h2>其他模块</h2>
+				<div class="text">
+					<ul class="con">
+						<li class="nav_u">
+							<a href="<?php echo site_url('admin/about') ?>" class="pos" >关于我们</a>
+						</li>
+					</ul>
+					<ul class="con">
+						<li class="nav_u">
+							<a href="<?php echo site_url('admin/news') ?>" class="pos">业界原创</a>
+						</li>
+					</ul>
+					<ul class="con">
+						<li class="nav_u">
+							<a href="<?php echo site_url('admin/useprocess') ?>" class="pos">使用流程</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="menu_box">
+				<h2>常用菜单</h2>
+				<div class="text">
+					<ul class="con">
+				        <li class="nav_u">
+				        	<a href="<?php echo site_url() ?>" class="pos" target="_blank">前台首页</a>				        	
+				        </li> 
+				    </ul>
+				  	<ul class="con">
+				        <li class="nav_u">
+				        	<a href="<?php echo site_url('admin/welcome') ?>" class="pos">系统信息</a>
+				        </li> 
+				    </ul>
+				    <ul class="con">
+				        <li class="nav_u">
+				        	<a href="<?php echo site_url('admin/modifypwd') ?>" class="pos">密码修改</a>
+				        </li> 
+				    </ul>
+				</div>
+			</div>			
+		</div>
+		<!-- 右侧 -->
+		<div id="right">
+			<iframe  frameboder="0" border="0" 	scrolling="yes" name="iframe" src="<?php echo site_url() . '/admin/welcome' ?>"></iframe>
+		</div>
+	<!-- 底部 -->
+	<div id="foot_box">
+		<div class="foot">
+			<p>@Copyright © 2013-2013 houdunwang.com All Rights Reserved. 京ICP备0000000号</p>
+		</div>
+	</div>
+
+</body>
+</html>
+<!--[if IE 6]>
+    <script type="text/javascript" src="<?php echo base_url() . 'style/admin/' ?>js/iepng.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('.adm_pic, #left_box .pos, .span_server, .span_people', 'background');
+    </script>
+<![endif]-->

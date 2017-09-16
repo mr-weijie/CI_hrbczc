@@ -1,0 +1,67 @@
+<?php
+     $pic_0=base_url('assets/advs/'.$flash['pics'][0]['pic']);
+     $pic_1=base_url('assets/advs/'.$flash['pics'][1]['pic']);
+     $pic_2=base_url('assets/advs/'.$flash['pics'][2]['pic']);
+     $pics=$pic_0.'|'.$pic_1.'|'.$pic_2;
+
+     $url_0=$flash['pics'][0]['url'];
+     $url_1=$flash['pics'][1]['url'];
+     $url_2=$flash['pics'][2]['url'];
+     $urls=$url_0.'|'.$url_1.'|'.$url_2;
+     $width=isset($flash['window'][0]['width']) ?$flash['window'][0]['width']:998;
+     $height=isset($flash['window'][0]['height']) ?$flash['window'][0]['height']:260;
+     $title=isset($flash['window'][0]['title']) ?$flash['window'][0]['title']:'';
+
+
+    ?>
+
+<div class="flash_side">
+    <div class="con" >
+        <ul>
+            <li class="upload">
+                <span>
+
+            </span>
+            </li>
+            <li>
+                <form enctype="multipart/form-data" method="post" name="upform" action="<?php echo site_url('admin/upload/1')?>">
+                第一张图片:<input name="upfile" type="file" size="1" style="font-size:10px"><input type="submit" value="上传" style="font-size:14px">
+                </form>
+            </li>
+            <li>
+                <img src="<?php echo $pic_0?>" width="<?php echo $width?>" height="<?php echo $height?>">
+            </li>
+            <form name="form1" method="post" action="<?php echo site_url('admin/update_flash_link')?>">
+                <li>跳转链接:<input type="text" name="url" class="admin_input_link" value="<?php echo $url_0 ?>"><input type="hidden" name="ID" value="1"><input name="submit" type="submit" value="提交"></li>
+            </form>
+            <li>
+                <form enctype="multipart/form-data" method="post" name="upform" action="<?php echo site_url('admin/upload/2')?>">
+                    第二张图片:<input name="upfile" type="file" size="1" style="font-size:10px"><input type="submit" value="上传" style="font-size:14px">
+                </form>
+            </li>
+            <li>
+                <img src="<?php echo $pic_1?>" width="<?php echo $width?>" height="<?php echo $height?>">
+            </li>
+            <form name="form2" method="post" action="<?php echo site_url('admin/update_flash_link')?>">
+                <li>跳转链接:<input type="text" name="url" class="admin_input_link" value="<?php echo $url_1 ?>"><input type="hidden" name="ID" value="2"><input name="submit" type="submit" value="提交"></li>
+            </form>
+            <li>
+                <form enctype="multipart/form-data" method="post" name="upform" action="<?php echo site_url('admin/upload/3')?>">
+                    第三张图片:<input name="upfile" type="file" size="1" style="font-size:10px"><input type="submit" value="上传" style="font-size:14px">
+                </form>
+            </li>
+            <li>
+                <img src="<?php echo $pic_2?>" width="<?php echo $width?>" height="<?php echo $height?>">
+            </li>
+            <form name="form3" method="post" action="<?php echo site_url('admin/update_flash_link')?>">
+                <li>跳转链接:<input type="text" name="url" class="admin_input_link" value="<?php echo $url_2 ?>"><input type="hidden" name="ID" value="3"><input name="submit" type="submit" value="提交"></li>
+            </form>
+        <form name="form1" method="post" action="<?php echo site_url('admin/update_flash') ?>">
+            <li>窗口宽度:<input type="text" name="width" class="admin_input" value="<?php echo $width ?>"></li>
+            <li>窗口高度:<input type="text" name="height" class="admin_input" value="<?php echo $height ?>"></li>
+            <li>标题文本:<input type="text" name="title" class="admin_input_title" value="<?php echo $title ?>"></li>
+            <li><input type="submit" value="提交"></li>
+        </form>
+        </ul>
+    </div>
+</div>

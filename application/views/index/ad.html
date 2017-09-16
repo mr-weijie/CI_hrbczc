@@ -1,0 +1,21 @@
+<div class="ad">
+    <ul class="adpic">
+        <li><IMG src="<?php echo base_url('assets/images/ad01.jpg')?>"></li>
+        <li><IMG src="<?php echo base_url('assets/images/ad02.jpg')?>"></li>
+        <li><IMG src="<?php echo base_url('assets/images/ad03.jpg')?>"></li>
+    </ul>
+    <A class=prev href="javascript:void(0)"></A>
+    <A class=next href="javascript:void(0)"></A>
+    <div class=num>
+        <ul></ul>
+    </div>
+</div>
+<script>
+    /*控制AD图片轮显*/
+    $(".prev,.next").hover(function(){
+        $(this).fadeTo("show",0.7);
+    },function(){
+        $(this).fadeTo("show",0.1);
+    })
+    $(".ad").slide({ titCell:".num ul" , mainCell:".adpic" , effect:"fold", autoPlay:true, delayTime:800 , autoPage:true });
+</script>

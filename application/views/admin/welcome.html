@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style rel="stylesheet">
+        li{list-style: none;}
+    </style>
+    <title>后台首页</title>
+</head>
+<body>
+<div>
+    <ul>
+        <li>
+            <span>用户名：</span><span><?php echo $this->session->userdata('usrname') ?></span>
+        </li>
+        <li>
+            <span>登录时间：</span><span><?php echo date('Y-m-d',$this->session->userdata('logintime')) ?></span>
+        </li>
+        <li>
+            <span>客户端IP：</span><span><?php echo $this->input->ip_address() ?></span>
+        </li>
+        <li>
+            <span><b>服务器信息：</b></span>
+        </li>
+        <li>
+            <span>服务器环境：</span><span><?php echo $this->input->server('SERVER_SOFTWARE') ?></span>
+        </li>
+        <li>
+            <span>PHP版本：</span><span><?php echo PHP_VERSION ?></span>
+        </li>
+        <li>
+            <span>服务器IP：</span><span><?php echo $this->input->server('SERVER_ADDR') ?></span>
+        </li>
+        <li>
+            <span>数据库信息：</span><span><?php //echo mysql_get_server_info() ?></span>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

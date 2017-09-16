@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <style rel="stylesheet">
+       div{margin: 0 auto;width: 300px;height: 200px;border: 1px solid}
+       li{ list-style: none;height: 30px;line-height: 30px}
+       input{
+           width: 140px;
+           height: 20px;
+           border: 1px solid;
+           border-color: #3B96CB;
+
+        }
+       .input_button{ width: 50px;height: 25px}
+        .err{color: #ff0000;display: block;}
+    </style>
+</head>
+<body>
+<form name="form1" action="<?php echo site_url('admin/update_passwd') ?>" method="POST">
+    <div>
+        <ul>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;用户名:<?php echo $this->session->userdata('usrname') ?></li>
+            <li>原始密码:<input type="password" name="passwd"/></li><?php echo form_error('passwd', '<li class="err">', '</li>') ?>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;新密码:<input type="password" name="passwdF"/></li><?php echo form_error('passwdF', '<li class="err">', '</li>') ?>
+            <li>确认密码:<input type="password" name="passwdS"/></li><?php echo form_error('passwdS', '<li class="err">', '</li>') ?>
+            <li style="text-align: center"><input type="submit" class="input_button" value="修改" /></li>
+        </ul>
+    </div>
+</form>
+</body>
+</html>
