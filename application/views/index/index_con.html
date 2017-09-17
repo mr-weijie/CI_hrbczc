@@ -64,7 +64,7 @@
                     <div id=inmoov>
                         <div id=moov1>
                             <?php foreach($products as $item): ?>
-                            <span class=xunhuan><img src="<?php echo base_url('assets/images/'.$item['pics'])?>" width=165 height=130><br><?php echo $item['title'] ?></span>
+                            <span class=xunhuan><a href="<?php echo site_url('home/displayinfo/products/'.$item['rowid'])?>"><img src="<?php echo base_url('assets/images/'.$item['pics'])?>" width=165 height=130><br><?php echo $item['title'] ?></a> </span>
                             <?php endforeach;?>
                         </div>
                         <div id=moov2>

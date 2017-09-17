@@ -18,13 +18,13 @@
 <body>
 <div class="flash_side">
     <div class="con">
-          <form name="form1" id="form1" method="post" action="<?php echo site_url('admin/insertnews')?>">
+          <form name="form1" id="form1" method="post" action="<?php echo site_url($action)?>">
            <ul>
-                <li>新闻标题:<input type="text" class="admin_input_normal" name="title"></li>
-                <li><span style="float: left; clear: both">新闻内容:</span><span style="float: left"><textarea name="content" id="content" style="width: 818px;height: 300px; border: 1px solid;border-color: #3B96CB;"></textarea></span></li>
+                <li><?php echo $title0?>:<input type="text" class="admin_input_normal" name="title"></li>
+                <li><span style="float: left; clear: both"><?php echo $title1?>:</span><span style="float: left"><textarea name="content" id="content" style="width: 818px;height: 300px; border: 1px solid;border-color: #3B96CB;"></textarea></span></li>
             </ul>
             <div style="width:820px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 65px;clear: both;text-align: center">
-                <input type="hidden" name="url" value="admin/news">
+                <input type="hidden" name="url" value="<?php echo $url?>">
                 <input type="submit" value="提交">
             </div>
         </form>

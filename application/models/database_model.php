@@ -46,39 +46,21 @@ class Database_model extends CI_Model{
        // p($data);
         return $data;
     }
-    public function getnewslist(){
-        $data=$this->db->select('rowid,title,addDate,modDate,author,source,clicks')->where(array('rectype'=>'news'))->order_by('modDate','desc')-> get('content')->result_array();
-        return $data;
-    }
+
     public function getnewslist_top($num){
-        $data=$this->db->select('rowid,title,modDate')->limit($num)->where(array('rectype'=>'news'))->order_by('modDate','desc')-> get('content')->result_array();
+        $data=$this->db->select('rowid,title,modDate')->limit($num)->order_by('modDate','desc')-> get('news')->result_array();
         return $data;
     }
-    public function getnews($rowid){
-        $data=$this->db->where(array('rowid'=>$rowid))->get('content')->result_array();
+    public function insertnews($data){
+        $status=$this->db->insert('news',$data);
         return $data;
     }
+
+
     public function update_content($rowid,$data){
         $status=$this->db->update('content',$data,array('rowid'=>$rowid));
         return $status;
 
-    }
-    public function deletenews($rowid){
-        $status=$this->db->delete('content',array('rowid'=>$rowid));
-        return $status;
-    }
-    public function insertnews($data){
-        $status=$this->db->insert('content',$data);
-        return $data;
-    }
-    public function getproducts(){
-        $data=$this->db->select('rowid,title,profile,pics,modDate')->get('products')->result_array();
-        return $data;
-
-    }
-    public function getproduct($rowid){
-        $data=$this->db->where(array('rowid'=>$rowid))->get('products')->result_array();
-        return $data;
     }
     public function updateprocductpic($rowid,$photofile){
         $data=array(
@@ -88,21 +70,38 @@ class Database_model extends CI_Model{
         return $status;
 
     }
-    public function update_product($rowid,$data){
-        $status=$this->db->update('products',$data,array('rowid'=>$rowid));
-        return $status;
-    }
-    public function deleteproduct($rowid){
-        $status=$this->db->delete('products',array('rowid'=>$rowid));
-        return $status;
-    }
     public function insertproduct($data){
         $status=$this->db->insert('products',$data);
         return $data;
     }
 
+    public function insertcase($data){
+        $status=$this->db->insert('cases',$data);
+        return $data;
+    }
 
+    public function deleterecord($tablename,$rowid){
+        $status=$this->db->delete($tablename,array('rowid'=>$rowid));
+        return $status;
 
+    }
+    public function getrecord($tablename,$rowid){
+        $data=$this->db->where(array('rowid'=>$rowid))->get($tablename)->result_array();
+        return $data;
+
+    }
+
+    public function getrecords($tablename){
+        $data=$this->db->get($tablename)->result_array();
+        return $data;
+
+    }
+
+    public function updaterecord($tablename,$rowid,$data){
+        $status=$this->db->update($tablename,$data,array('rowid'=>$rowid));
+        return $status;
+
+    }
 
 
 

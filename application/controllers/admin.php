@@ -120,12 +120,20 @@ class Admin extends MY_Controller{
         }
     }
     public function news(){
+        $parms['base_url']='admin/news/';
+        $parms['tablename']='news';
+        $parms['class']='news';
+        $parms['tablename']='news';
+        $parms['url']='news';
+        $this->listinfo($parms);
+    }
+    public function listinfo($parms){
         $this->load->library('pagination');
         $pageNo=$this->uri->segment(3);
         $pageNo=isset($pageNo)?$pageNo:1;
         $perpage=20;
-        $config['base_url']=site_url('admin/news/');
-        $config['total_rows'] = $this->db->where(array('rectype'=>'news'))->count_all_results('content');
+        $config['base_url']=site_url($parms['base_url']);
+        $config['total_rows'] = $this->db->count_all_results($parms['tablename']);
         $config['uri_segment']=3;
         $config['per_page']=$perpage;
 
@@ -139,7 +147,7 @@ class Admin extends MY_Controller{
         $offset=$this->uri->segment( $config['uri_segment']);
         // p($offset);
         $this->db->limit($perpage, $offset);
-        $data['info']=$this->database->getnewslist();
+        $data['info']=$this->database->getrecords($parms['tablename']);
         $data['links']=$links;
         $data['total_rows']= $config['total_rows'];
         $data['cur_page']=$offset;
@@ -147,31 +155,22 @@ class Admin extends MY_Controller{
         $pstop=$offset+$perpage;
         $pstop=$pstop>$config['total_rows'] ?$config['total_rows']:$pstop;
         $data['offset']=$pstart.'-'.$pstop;
+        $data['class']=$parms['class'];
+        $data['tablename']=$parms['tablename'];
+        $data['url']=$parms['url'];
+
         $this->load->view('admin/header.html',$data);
-        $this->load->view('admin/news.html');
+        $this->load->view('admin/infolist.html');
         $this->load->view('admin/footer.html');
 
     }
-    public function editnews(){
-        $rowid=$this->uri->segment(3);
-        $data['news']=$this->database->getnews($rowid);
-        $this->load->view('admin/editnews.html',$data);
-        $this->load->view('admin/footer.html');
 
-    }
-    public function deletenews(){
-        $rowid=$this->uri->segment(3);
-        $status=$this->database->deletenews($rowid);
-        $url='admin/news';
-        if($status)
-        {
-            success($url,'记录删除成功！');
-        }else{
-            error('记录删除失败！');
-        }
-    }
     public function addnews(){
-        $this->load->view('admin/addnews.html');
+        $data['action']='admin/insertnews';
+        $data['title0']='新闻标题';
+        $data['title1']='新闻内容';
+        $data['url']='admin/news';
+        $this->load->view('admin/addrecord.html',$data);
         $this->load->view('admin/footer.html');
     }
     public function insertnews(){
@@ -186,7 +185,6 @@ class Admin extends MY_Controller{
                 'rowid'=>strtoupper(md5($title.date("Y-m-d H:i:s"))),//采用系统时间+IdentityID的方法
                 'title'=>$title,
                 'content'=>$content,
-                'rectype'=>'news',
                 'author'=>$this->session->userdata('author'),
                 'addDate'	=> time(),
                 'modDate'	=> time()
@@ -207,93 +205,16 @@ class Admin extends MY_Controller{
 
     }
 
-    public function updatenews(){
-        $rowid=$this->input->post('rowid');
-        $url=$this->input->post('url');
-        $data=array(
-            'title'      =>$this->input->post('title'),
-            'content'=>$_POST['content'],//此处不能采用CI自带的输入模块，否则有些style属性被自动替换成xss=removed
-            'modDate'=>time()
-        );
-        $status=$this->database->update_content($rowid,$data);
-        if($status)
-        {
-            success($url,'原创内容保存成功！');
-        }else{
-            error('原创内容保存失败！');
-        }
-
-    }
-    public function delete_news(){
-        $rowid=$this->input->post('rowid');
-        $url=$this->input->post('url');
-        $status=$this->database->delete_news($rowid);
-        if($status)
-        {
-            success($url,'记录删除成功！');
-        }else{
-            error('记录删除失败！');
-        }
-    }
 
     public function products(){
-        $this->load->library('pagination');
-        $pageNo=$this->uri->segment(3);
-        $pageNo=isset($pageNo)?$pageNo:1;
-        $perpage=10;
-        $config['base_url']=site_url('admin/products/');
-        $config['total_rows'] = $this->db->count_all_results('products');
-        $config['uri_segment']=3;
-        $config['per_page']=$perpage;
-
-        $config['first_link'] = '第一页';
-        $config['prev_link'] = '上一页';
-        $config['next_link'] = '下一页';
-        $config['last_link'] = '最后一页';
-
-        $this->pagination->initialize($config);//初始化
-        $links = $this->pagination->create_links();
-        $offset=$this->uri->segment( $config['uri_segment']);
-        // p($offset);
-        $this->db->limit($perpage, $offset);
-        $data['info']=$this->database->getproducts();
-        $data['links']=$links;
-        $data['total_rows']= $config['total_rows'];
-        $data['cur_page']=$offset;
-        $pstart=$offset+1;
-        $pstop=$offset+$perpage;
-        $pstop=$pstop>$config['total_rows'] ?$config['total_rows']:$pstop;
-        $data['offset']=$pstart.'-'.$pstop;
-        $this->load->view('admin/header.html',$data);
-        $this->load->view('admin/products.html');
-        $this->load->view('admin/footer.html');
-
+        $parms['base_url']='admin/products/';
+        $parms['tablename']='products';
+        $parms['class']='product';
+        $parms['tablename']='products';
+        $parms['url']='products';
+        $this->listinfo($parms);
     }
 
-    public function editproduct(){
-        $rowid=$this->uri->segment(3);
-        $data['product']=$this->database->getproduct($rowid);
-        $this->load->view('admin/editproduct.html',$data);
-        $this->load->view('admin/footer.html');
-
-    }
-    public function updateproduct(){
-        $rowid=$this->input->post('rowid');
-        $data=array(
-            'title'=>$this->input->post('title'),
-            'profile'=>$this->input->post('profile'),
-            'content'=>$_POST['content'],//此处不能采用CI自带的输入模块，否则有些style属性被自动替换成xss=removed
-            'modDate'=>time()
-        );
-        $status=$this->database->update_product($rowid,$data);
-        if($status)
-        {
-            success('admin/products','产品参数设置成功！');
-        }else{
-            error('产品参数设置失败！');
-        }
-
-    }
     public function uploadproductpic(){
         $rowid=$this->input->post("rowid");
         $config['upload_path']='./assets/images/';
@@ -318,10 +239,11 @@ class Admin extends MY_Controller{
             error('请正确选择图片后再上传！');
         }
     }
-    public function deleteproduct(){
-        $rowid=$this->uri->segment(3);
-        $status=$this->database->deleteproduct($rowid);
-        $url='admin/products';
+    public function deleterecord(){
+        $tablename=$this->uri->segment(3);
+        $rowid=$this->uri->segment(4);
+        $status=$this->database->deleterecord($tablename,$rowid);
+        $url='admin/'.$tablename;
         if($status)
         {
             success($url,'记录删除成功！');
@@ -329,10 +251,19 @@ class Admin extends MY_Controller{
             error('记录删除失败！');
         }
     }
+
+
+
     public function addproduct(){
-        $this->load->view('admin/addproduct.html');
+        $data['action']='admin/insertproduct';
+        $data['title0']='产品标题';
+        $data['title1']='产品内容';
+        $data['url']='admin/products';
+        $this->load->view('admin/addrecord.html',$data);
         $this->load->view('admin/footer.html');
     }
+
+
 
     public function insertproduct(){
         $this->load->library('form_validation');
@@ -365,8 +296,85 @@ class Admin extends MY_Controller{
         }
 
     }
+    public function cases(){
+        $parms['base_url']='admin/cases/';
+        $parms['tablename']='cases';
+        $parms['class']='case';
+        $parms['tablename']='cases';
+        $parms['url']='cases';
+        $this->listinfo($parms);
+    }
 
+    public function addcase(){
+        $data['action']='admin/insertcase';
+        $data['title0']='案例标题';
+        $data['title1']='案例内容';
+        $data['url']='admin/cases';
+        $this->load->view('admin/addrecord.html',$data);
+        $this->load->view('admin/footer.html');
+    }
+    public function insertcase(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('title',"案例标题",'required');
+        $this->form_validation->set_rules('content',"案例内容",'required');
+        $status=$this->form_validation->run();
+        if($status){
+            $title=$this->input->post('title');
+            $content=$_POST['content'];
+            $data=array(
+                'rowid'=>strtoupper(md5($title.date("Y-m-d H:i:s"))),//采用系统时间+IdentityID的方法
+                'title'=>$title,
+                'content'=>$content,
+                'author'=>$this->session->userdata('author'),
+                'addDate'	=> time(),
+                'modDate'	=> time()
+            );
+            $status=$this->database->insertcase($data);
+            if($status){
+                $msg='新增记录成功！';
+                $url='admin/cases';
+                success($url, $msg);
+            }
 
+        }else
+        {
+            $this->load->helper('form');//加载显示表单错误类
+            $this->load->view('admin/addnews.html');
+            $this->load->view('admin/footer.html');
+        }
+
+    }
+
+    public function editrecord(){
+        $data['url']=$this->uri->segment(3);;
+        $tablename=$this->uri->segment(4);
+        $rowid=$this->uri->segment(5);
+        $data['record']=$this->database->getrecord($tablename,$rowid);
+        $data['action']='admin/updaterecord';
+        $data['tablename']=$tablename;
+        $this->load->view('admin/editrecord.html',$data);
+        $this->load->view('admin/footer.html');
+
+    }
+    public function updaterecord(){
+        $rowid=$this->input->post('rowid');
+        $tablename=$this->input->post('tablename');
+        $url=$this->input->post('url');
+        $data=array(
+            'title'=>$this->input->post('title'),
+            'profile'=>$this->input->post('profile'),
+            'content'=>$_POST['content'],//此处不能采用CI自带的输入模块，否则有些style属性被自动替换成xss=removed
+            'modDate'=>time()
+        );
+        $status=$this->database->updaterecord($tablename,$rowid,$data);
+        if($status)
+        {
+            success('admin/'.$url,'记录更新成功！');
+        }else{
+            error('记录更新失败！');
+        }
+
+    }
 
 
 
