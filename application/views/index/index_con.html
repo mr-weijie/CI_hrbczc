@@ -37,7 +37,7 @@
                         <?php foreach($news as $item):?>
                         <li>
                             <ul>
-                                <li class="rec-left"><a href="<?php echo site_url('home/displayinfo/'.$item['rowid']) ?>"><?php echo $item['title']?></a> </li>
+                                <li class="rec-left"><a href="<?php echo site_url('home/displayinfo/content/'.$item['rowid']) ?>"><?php echo $item['title']?></a> </li>
                                 <li class="rec-right"><?php echo date('Y-m-d',$item['modDate'])?></li>
                             </ul>
                         </li>
@@ -57,20 +57,15 @@
         <div class="middle">
             <ul>
                 <li class="left">产品展示</li>
-                <li class="right"><a href="#"> 更多>></a></li>
+                <li class="right"><a href="<?php echo site_url('home/products') ?>"> 更多>></a></li>
             </ul>
             <div class="product-show">
                 <div id=moov>
                     <div id=inmoov>
                         <div id=moov1>
-                            <span class=xunhuan><img src="<?php echo base_url('assets/images/marquee01/20151209115846175.jpg')?>" width=165 height=130><br>发明专利证书</span>
-                            <span class=xunhuan><img src="<?php echo base_url('assets/images/marquee01/20151209110434627.jpg')?>" width=165 height=130><br>实用新型专利证书6</span>
-                            <span class=xunhuan><img src="<?php echo base_url('assets/images/marquee01/20151209110410967.jpg')?>" width=165 height=130><br>实用新型专利证书5</span>
-                            <span class=xunhuan><img src="<?php echo base_url('assets/images/marquee01/20151209110342308.jpg')?>" width=165 height=130><br>实用新型专利证书4</span>
-                            <span class=xunhuan><img src="<?php echo base_url('assets/images/marquee01/20151209110306849.jpg')?>" width=165 height=130><br>实用新型专利证书3</span>
-                            <span class=xunhuan><img src="<?php echo base_url('assets/images/marquee01/20151209110229706.jpg')?>" width=165 height=130><br>实用新型专利证书2</span>
-                            <span class=xunhuan><img src="<?php echo base_url('assets/images/marquee01/20151209110155665.jpg')?>" width=165 height=130><br>实用新型专利证书1</span>
-                            <span class=xunhuan><img src="<?php echo base_url('assets/images/marquee01/20151209105935602.jpg')?>" width=165 height=130><br>发明专利证书</span>
+                            <?php foreach($products as $item): ?>
+                            <span class=xunhuan><img src="<?php echo base_url('assets/images/'.$item['pics'])?>" width=165 height=130><br><?php echo $item['title'] ?></span>
+                            <?php endforeach;?>
                         </div>
                         <div id=moov2>
 

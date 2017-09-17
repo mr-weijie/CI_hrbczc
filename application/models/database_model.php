@@ -12,7 +12,7 @@ class Database_model extends CI_Model{
     }
     public function get_menu_data(){
         $data['about']=$this->get_menu('关于我们');
-        $data['products']=$this->get_menu('产品中心');
+        $data['products_center']=$this->get_menu('产品中心');
         $data['selectedcases']=$this->get_menu('精选案例');
         $data['newscenter']=$this->get_menu('新闻中心');
         $data['technology']=$this->get_menu('研发技术');
@@ -71,6 +71,40 @@ class Database_model extends CI_Model{
         $status=$this->db->insert('content',$data);
         return $data;
     }
+    public function getproducts(){
+        $data=$this->db->select('rowid,title,profile,pics,modDate')->get('products')->result_array();
+        return $data;
+
+    }
+    public function getproduct($rowid){
+        $data=$this->db->where(array('rowid'=>$rowid))->get('products')->result_array();
+        return $data;
+    }
+    public function updateprocductpic($rowid,$photofile){
+        $data=array(
+            'pics'=>$photofile
+        );
+        $status=$this->db->update('products',$data,array('rowid'=>$rowid));
+        return $status;
+
+    }
+    public function update_product($rowid,$data){
+        $status=$this->db->update('products',$data,array('rowid'=>$rowid));
+        return $status;
+    }
+    public function deleteproduct($rowid){
+        $status=$this->db->delete('products',array('rowid'=>$rowid));
+        return $status;
+    }
+    public function insertproduct($data){
+        $status=$this->db->insert('products',$data);
+        return $data;
+    }
+
+
+
+
+
 
 
 

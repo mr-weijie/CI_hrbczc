@@ -236,31 +236,6 @@ class Admin extends MY_Controller{
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function products(){
         $this->load->library('pagination');
         $pageNo=$this->uri->segment(3);
@@ -319,6 +294,103 @@ class Admin extends MY_Controller{
         }
 
     }
+    public function uploadproductpic(){
+        $rowid=$this->input->post("rowid");
+        $config['upload_path']='./assets/images/';
+        $config['allowed_types']='gif|jpg|png|jpeg';
+        $config['overwrite']=true;//遇到同名的覆盖
+        // $config['file_name']=time().mt_rand(1000,9999);
+        $config['file_name']='product_'.$rowid;//图片文件名
+//载入上传类
+        $this->load->library('upload',$config);
+        $status=$this->upload->do_upload('upfile');//此处的参数必须与表单中的文件字段名字相同
+        if($status){
+            $photofile=$this->upload->data('file_name');//返回已保存的文件名
+            $data=$this->database->updateprocductpic($rowid,$photofile);
+            if($data)
+            {
+                redirect(site_url('admin/editproduct/'.$rowid));
+            }else{
+                error("对不起！图片上传失败！");
+            }
+        }else
+        {
+            error('请正确选择图片后再上传！');
+        }
+    }
+    public function deleteproduct(){
+        $rowid=$this->uri->segment(3);
+        $status=$this->database->deleteproduct($rowid);
+        $url='admin/products';
+        if($status)
+        {
+            success($url,'记录删除成功！');
+        }else{
+            error('记录删除失败！');
+        }
+    }
+    public function addproduct(){
+        $this->load->view('admin/addproduct.html');
+        $this->load->view('admin/footer.html');
+    }
+
+    public function insertproduct(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('title',"产品标题",'required');
+        $this->form_validation->set_rules('content',"产品内容",'required');
+        $status=$this->form_validation->run();
+        if($status){
+            $title=$this->input->post('title');
+            $content=$_POST['content'];
+            $data=array(
+                'rowid'=>strtoupper(md5($title.date("Y-m-d H:i:s"))),//采用系统时间+IdentityID的方法
+                'title'=>$title,
+                'content'=>$content,
+                'author'=>$this->session->userdata('author'),
+                'addDate'	=> time(),
+                'modDate'	=> time()
+            );
+            $status=$this->database->insertproduct($data);
+            if($status){
+                $msg='新增记录成功！';
+                $url='admin/products';
+                success($url, $msg);
+            }
+
+        }else
+        {
+            $this->load->helper('form');//加载显示表单错误类
+            $this->load->view('admin/addnews.html');
+            $this->load->view('admin/footer.html');
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -345,30 +417,6 @@ class Admin extends MY_Controller{
 
 
 
-    public function uploadproductpic(){
-        $rowid=$this->input->post("rowid");
-        $config['upload_path']='./assets/images/';
-        $config['allowed_types']='gif|jpg|png|jpeg';
-        $config['overwrite']=true;//遇到同名的覆盖
-        // $config['file_name']=time().mt_rand(1000,9999);
-        $config['file_name']='product_'.$rowid;//图片文件名
-//载入上传类
-        $this->load->library('upload',$config);
-        $status=$this->upload->do_upload('upfile');//此处的参数必须与表单中的文件字段名字相同
-        if($status){
-            $photofile=$this->upload->data('file_name');//返回已保存的文件名
-            $data=$this->database->updateprocductpic($rowid,$photofile);
-            if($data)
-            {
-                redirect(site_url('admin/editproduct/'.$rowid));
-            }else{
-                error("对不起！图片上传失败！");
-            }
-        }else
-        {
-            error('请正确选择图片后再上传！');
-        }
-    }
 
 
     public function customized(){

@@ -1,7 +1,9 @@
 <div style="width: 998px;height: auto;border: 1px solid;border-color: #999999">
     <div style="width: auto;height: 50px;background-color: #bce8f1;color: #000000;text-align: center">
         <h1 style="height: 30px;line-height: 30px;font-size: 18px;margin: 0px"><?php echo isset($displayInfo) ?$displayInfo[0]['title']:'' ?></h1>
-        <ul style="width: 300px;height: 20px;float: right"><li>作者：<?php echo isset($displayInfo) ?$displayInfo[0]['author']:'' ?></li><li>最后编辑时间：<?php echo isset($displayInfo) ?date('Y-m-d',$displayInfo[0]['modDate']):'' ?></li></ul>
+        <?php if(isset($displayInfo[0]['author'])) {?>
+        <ul style="width: 300px;height: 20px;float: right"><li>作者：<?php echo isset($displayInfo[0]['author']) ?$displayInfo[0]['author']:'' ?></li><li style="margin-left: 10px">最后编辑：<?php echo isset($displayInfo) ?date('Y-m-d',$displayInfo[0]['modDate']):'' ?></li></ul>
+        <?php }?>
     </div>
     <?php echo isset($displayInfo) ?$displayInfo[0]['content']:'' ?>
 </div>
