@@ -140,8 +140,6 @@ class Admin extends MY_Controller{
         $parms['base_url']='admin/news/';
         $parms['tablename']='news';
         $parms['class']='news';
-        $parms['tablename']='news';
-        $parms['url']='news';
         $this->listinfo($parms);
     }
 
@@ -162,7 +160,6 @@ class Admin extends MY_Controller{
         $parms['base_url']='admin/products/';
         $parms['tablename']='products';
         $parms['class']='product';
-        $parms['tablename']='products';
         $this->listinfo($parms);
     }
 
@@ -182,8 +179,6 @@ class Admin extends MY_Controller{
         $parms['base_url']='admin/cases/';
         $parms['tablename']='cases';
         $parms['class']='case';
-        $parms['tablename']='cases';
-        $parms['url']='cases';
         $this->listinfo($parms);
     }
 
@@ -195,6 +190,58 @@ class Admin extends MY_Controller{
         $data['tablename']='cases';
         $this->load->view('admin/addrecord.html',$data);
         $this->load->view('admin/footer.html');
+    }
+    public function clients(){
+        $parms['base_url']='admin/clients/';
+        $parms['tablename']='clients';
+        $parms['class']='client';
+        $this->listinfo($parms);
+
+    }
+    public function addclient(){
+        $this->load->library('form_validation');
+        $data['title']='新增客户资料';
+        $this->load->view('admin/addclient.html',$data);
+        $this->load->view('admin/footer.html');
+
+    }
+    public function insertclient(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('clientName',"客户姓名",'required');
+        $this->form_validation->set_rules('province',"所在省份",'required');
+        $this->form_validation->set_rules('city',"所在城市",'required');
+        $this->form_validation->set_rules('address',"通讯地址",'required');
+        $this->form_validation->set_rules('phoneNo',"联系电话",'required');
+        $status=$this->form_validation->run();
+        if($status){
+            $clientName=$this->input->post('clientName');
+            $sex=$this->input->post('sex');
+            $province=$this->input->post('province');
+            $city=$this->input->post('city');
+            $address=$this->input->post('address');
+            $phoneNo=$this->input->post('phoneNo');
+            $data=array(
+                'rowid'=>strtoupper(md5($clientName.date("Y-m-d H:i:s"))),//采用系统时间+IdentityID的方法
+                'clientName'=>$clientName,
+                'sex'=>$sex,
+                'province'=>$province,
+                'city'=>$city,
+                'address'=>$address,
+                'phoneNo'=>$phoneNo,
+                'modDate'	=> time()
+            );
+            $status=$this->database->insert_record('clients',$data);
+            if($status){
+                $msg='新增记录成功！';
+                success('admin/clients', $msg);
+            }
+
+        }else
+        {
+            $this->load->helper('form');//加载显示表单错误类
+            $this->load->view('admin/addclient.html');
+            $this->load->view('admin/footer.html');
+        }
     }
 
 
