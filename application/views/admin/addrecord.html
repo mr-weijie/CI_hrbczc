@@ -18,13 +18,23 @@
 <body>
 <div class="flash_side">
     <div class="con">
-          <form name="form1" id="form1" method="post" action="<?php echo site_url($action)?>">
+          <form name="form1" id="form1" method="post" action="<?php echo site_url('admin/insertrecord')?>">
            <ul>
-                <li><?php echo $title0?>:<input type="text" class="admin_input_normal" name="title"></li>
-                <li><span style="float: left; clear: both"><?php echo $title1?>:</span><span style="float: left"><textarea name="content" id="content" style="width: 818px;height: 300px; border: 1px solid;border-color: #3B96CB;"></textarea></span></li>
+                <li><?php echo isset($title0)?$title0:set_value('title0') ?>:
+                    <input type="text" class="admin_input_normal" name="title" value="<?php echo set_value('title')?>">
+                    <input type="hidden" name="title0" value="<?php echo isset($title0)?$title0:set_value('title0') ?>">
+                </li>
+               <?php echo form_error('title', '<li class="err">', '</li>') ?>
+               <?php echo form_error('content', '<li class="err">', '</li>') ?>
+                <li>
+                    <span style="float: left; clear: both"><?php echo isset($title1)?$title1:set_value('title1') ?>:</span>
+                    <span style="float: left"><textarea name="content" id="content" style="width: 818px;height: 300px; border: 1px solid;border-color: #3B96CB;"><?php echo set_value('content')?></textarea></span>
+                    <input type="hidden" name="title1" value="<?php echo isset($title1)?$title1:set_value('title1') ?>">
+                </li>
             </ul>
             <div style="width:820px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 65px;clear: both;text-align: center">
-                <input type="hidden" name="url" value="<?php echo $url?>">
+                <input type="hidden" name="url" value="<?php echo isset($url)?$url:set_value('url')?>">
+                <input type="hidden" name="tablename" value="<?php echo isset($tablename)?$tablename:set_value('tablename')?>">
                 <input type="submit" value="提交">
             </div>
         </form>

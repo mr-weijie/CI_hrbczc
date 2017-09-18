@@ -1,6 +1,7 @@
 body{ font-size: 14px; margin: 0px;margin-bottom: 30px;background-color: #D0D0D0}
 li{ list-style: none}
 
+.err {color: #ff0000;}
 .flash_side{width: 100%;height: 700px;}
 .con li{ margin-top: 0px;margin-top: 5px;}
 .admin_input{border: 1px solid;border-color: #4F97E9;width: 30px;margin-top: 10px;}
