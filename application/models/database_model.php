@@ -62,22 +62,14 @@ class Database_model extends CI_Model{
         return $status;
 
     }
-    public function updateprocductpic($rowid,$photofile){
-        $data=array(
-            'pics'=>$photofile
-        );
-        $status=$this->db->update('products',$data,array('rowid'=>$rowid));
+    public function update_record_pic($tablename,$rowid,$data){
+        $status=$this->db->update($tablename,$data,array('rowid'=>$rowid));
         return $status;
 
     }
-    public function insertproduct($data){
-        $status=$this->db->insert('products',$data);
-        return $data;
-    }
-
-    public function insertcase($data){
-        $status=$this->db->insert('cases',$data);
-        return $data;
+    public function insert_record($tablename,$data){
+        $status=$this->db->insert($tablename,$data);
+        return $status;
     }
 
     public function deleterecord($tablename,$rowid){
@@ -92,7 +84,7 @@ class Database_model extends CI_Model{
     }
 
     public function getrecords($tablename){
-        $data=$this->db->get($tablename)->result_array();
+        $data=$this->db->order_by('modDate','desc')->get($tablename)->result_array();
         return $data;
 
     }

@@ -20,18 +20,20 @@
     <div class="con">
             <ul>
                 <li>
-                    <form enctype="multipart/form-data" method="post" name="upform" action="<?php echo site_url('admin/uploadprofilepic')?>">
+                    <form enctype="multipart/form-data" method="post" name="upform" action="<?php echo site_url('admin/uploadpic')?>">
                         公司简介图片:
                         <input name="upfile" type="file" size="1" style="font-size:10px">
                         <input type="hidden" name="rowid" value="<?php echo $profile[0]['rowid']?>">
                         <input type="submit" value="上传" style="font-size:14px">
+                        <input type="hidden" name="url" value="admin/profile">
+                        <input type="hidden" name="tablename" value="sysinfo">
                     </form>
                 </li>
             </ul>
 
           <form name="form1" method="post" action="<?php echo site_url('admin/update_profile')?>">
            <ul>
-               <li style=" width: 720px; text-align: center"><img src="<?php echo base_url('assets/images/'.$profile[0]['profile_pic'])?>"></li>
+               <li style=" width: 720px; text-align: center"><img src="<?php echo base_url('assets/images/'.$profile[0]['pics'])?>"></li>
                <li><span style="float: left; clear: both">公司简介:</span>
                     <span style="float: left">
                         <textarea name="profile" id="profile" style="width: 818px;height: 300px; border: 1px solid;border-color: #3B96CB;">

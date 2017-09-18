@@ -114,12 +114,12 @@ div{ margin: 0 auto;}
 
 
 /*start新闻列表部分CSS*/
-.flash_side{width: 1000px;height: 750px;}
-.news-con li{ margin-top: 0px;margin-top: 5px;}
-.news-con .rec :hover{background-color: #66afe9}
-.news-con ul{padding-left: 5px}
+.flash_side{width: 988px;height: auto;border: 1px solid;border-color: #cbcbcb;padding: 5px;overflow: auto}
+.flash_side  li{ margin-top: 0px;margin-top: 5px;}
+.flash_side .rec :hover{background-color: #66afe9}
 .rec{width: 990px;height: 30px; }
 .head{background-color: #D0D0D0}
+.pages a{margin: 10px}
 .rec .title{width: 870px;height: 30px;line-height:30px;float: left}
 .rec .date{width: 120px;height: 30px;line-height: 30px;float: left}
 .rec .total{width: 300px;height: 30px;line-height: 30px;float: left}

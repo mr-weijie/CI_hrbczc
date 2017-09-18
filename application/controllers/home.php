@@ -18,7 +18,8 @@ class Home extends CI_Controller {
         $data['title']='哈尔滨醇正醇酒曲厂';
         $data['sysinfo']=$this->database->getsysinfo();
         $data['news']=$this->database->getnewslist_top(4);
-        $data['products']=$this->database->getproducts();
+        $data['products']=$this->database->getrecords('products');
+        $data['cases']=$this->database->getrecords('cases');
         $this->load->view('header.html',$data);
         $this->load->view('index/nav.html');
         $this->load->view('index/ad.html');
@@ -53,7 +54,7 @@ class Home extends CI_Controller {
         $this->load($data);
 
     }
-    public function cases(){
+    public function selectedcases(){
         $rowid=$this->uri->segment(3);
         $data=$this->database->get_menu_data();
         $data['projects']=$this->database->get_menu('精选案例');
@@ -141,8 +142,6 @@ class Home extends CI_Controller {
         $this->load->view('index/displayinfo.html');
         $this->load->view('copyright.html');
         $this->load->view('footer.html');
-
-
     }
 
     public function load($data){
@@ -154,53 +153,31 @@ class Home extends CI_Controller {
         $this->load->view('footer.html');
     }
     public function news(){
-        $data=$this->database->get_menu_data();
-        $this->load->library('pagination');
-        $pageNo=$this->uri->segment(3);
-        $pageNo=isset($pageNo)?$pageNo:1;
-        $perpage=20;
-        $config['base_url']=site_url('home/news/');
-        $config['total_rows'] = $this->db->where(array('rectype'=>'news'))->count_all_results('content');
-        $config['uri_segment']=3;
-        $config['per_page']=$perpage;
-
-        $config['first_link'] = '第一页';
-        $config['prev_link'] = '上一页';
-        $config['next_link'] = '下一页';
-        $config['last_link'] = '最后一页';
-
-        $this->pagination->initialize($config);//初始化
-        $links = $this->pagination->create_links();
-        $offset=$this->uri->segment( $config['uri_segment']);
-        // p($offset);
-        $this->db->limit($perpage, $offset);
-        $data['info']=$this->database->getnewslist();
-        $data['links']=$links;
-        $data['total_rows']= $config['total_rows'];
-        $data['cur_page']=$offset;
-        $pstart=$offset+1;
-        $pstop=$offset+$perpage;
-        $pstop=$pstop>$config['total_rows'] ?$config['total_rows']:$pstop;
-        $data['offset']=$pstart.'-'.$pstop;
-        $data['tablename']='content';
-
-        $data['sysinfo']=$this->database->getsysinfo();
-        $this->load->view('header.html',$data);
-        $this->load->view('index/nav.html');
-        $this->load->view('index/ad.html');
-        $this->load->view('index/news.html');
-        $this->load->view('copyright.html');
-        $this->load->view('footer.html');
-
+        $parms['base_url']='home/news/';
+        $parms['tablename']='news';
+        $this->listinfo($parms);
+    }
+    public function cases(){
+        $parms['base_url']='home/cases/';
+        $parms['tablename']='cases';
+        $this->listinfo($parms);
     }
     public function products(){
+        $parms['base_url']='home/products/';
+        $parms['tablename']='products';
+        $this->listinfo($parms);
+    }
+
+
+
+    public function listInfo($parms){
         $data=$this->database->get_menu_data();
         $this->load->library('pagination');
         $pageNo=$this->uri->segment(3);
         $pageNo=isset($pageNo)?$pageNo:1;
         $perpage=20;
-        $config['base_url']=site_url('home/products/');
-        $config['total_rows'] = $this->db->count_all_results('products');
+        $config['base_url']=site_url($parms['base_url']);
+        $config['total_rows'] = $this->db->count_all_results($parms['tablename']);
         $config['uri_segment']=3;
         $config['per_page']=$perpage;
 
@@ -214,7 +191,7 @@ class Home extends CI_Controller {
         $offset=$this->uri->segment( $config['uri_segment']);
         // p($offset);
         $this->db->limit($perpage, $offset);
-        $data['info']=$this->database->getproducts();
+        $data['info']=$this->database->getrecords($parms['tablename']);
         $data['links']=$links;
         $data['total_rows']= $config['total_rows'];
         $data['cur_page']=$offset;
@@ -222,16 +199,15 @@ class Home extends CI_Controller {
         $pstop=$offset+$perpage;
         $pstop=$pstop>$config['total_rows'] ?$config['total_rows']:$pstop;
         $data['offset']=$pstart.'-'.$pstop;
-        $data['tablename']='products';
+        $data['tablename']=$parms['tablename'];
 
         $data['sysinfo']=$this->database->getsysinfo();
         $this->load->view('header.html',$data);
         $this->load->view('index/nav.html');
         $this->load->view('index/ad.html');
-        $this->load->view('index/news.html');
+        $this->load->view('index/infolist.html');
         $this->load->view('copyright.html');
         $this->load->view('footer.html');
-
     }
 
 }
