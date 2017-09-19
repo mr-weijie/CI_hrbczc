@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Created by PhpStorm.
  * User: Administrator
@@ -105,8 +106,9 @@ class Admin extends MY_Controller{
         $pageNo=$this->uri->segment(3);
         $pageNo=isset($pageNo)?$pageNo:1;
         $perpage=20;
+        $parms['where']=isset($parms['where'])?$parms['where']:array();
         $config['base_url']=site_url($parms['base_url']);
-        $config['total_rows'] = $this->db->count_all_results($parms['tablename']);
+        $config['total_rows'] = $this->db->like($parms['where'],'both')->count_all_results($parms['tablename']);
         $config['uri_segment']=3;
         $config['per_page']=$perpage;
 
@@ -120,7 +122,7 @@ class Admin extends MY_Controller{
         $offset=$this->uri->segment( $config['uri_segment']);
         // p($offset);
         $this->db->limit($perpage, $offset);
-        $data['info']=$this->database->getrecords($parms['tablename']);
+        $data['info']=$this->database->getrecords($parms['tablename'],$parms['where']);
         $data['links']=$links;
         $data['total_rows']= $config['total_rows'];
         $data['cur_page']=$offset;
@@ -130,9 +132,8 @@ class Admin extends MY_Controller{
         $data['offset']=$pstart.'-'.$pstop;
         $data['class']=$parms['class'];
         $data['tablename']=$parms['tablename'];
-
         $this->load->view('admin/header.html',$data);
-        $this->load->view('admin/infolist.html');
+        $this->load->view($parms['html']);
         $this->load->view('admin/footer.html');
 
     }
@@ -140,6 +141,7 @@ class Admin extends MY_Controller{
         $parms['base_url']='admin/news/';
         $parms['tablename']='news';
         $parms['class']='news';
+        $parms['html']='admin/infolist.html';
         $this->listinfo($parms);
     }
 
@@ -160,6 +162,7 @@ class Admin extends MY_Controller{
         $parms['base_url']='admin/products/';
         $parms['tablename']='products';
         $parms['class']='product';
+        $parms['html']='admin/infolist.html';
         $this->listinfo($parms);
     }
 
@@ -179,6 +182,7 @@ class Admin extends MY_Controller{
         $parms['base_url']='admin/cases/';
         $parms['tablename']='cases';
         $parms['class']='case';
+        $parms['html']='admin/infolist.html';
         $this->listinfo($parms);
     }
 
@@ -192,9 +196,20 @@ class Admin extends MY_Controller{
         $this->load->view('admin/footer.html');
     }
     public function clients(){
+        $this->load->library('form_validation');
         $parms['base_url']='admin/clients/';
         $parms['tablename']='clients';
         $parms['class']='client';
+        $parms['html']='admin/clientlist.html';
+        $clientName=$this->input->post('clientName');
+        $province=$this->input->post('province');
+        $city=$this->input->post('city');
+        $phoneNo=$this->input->post('phoneNo');
+        $parms['where']=array();
+        if(!empty($clientName)) $parms['where']['clientName']=$clientName;
+        if(!empty($province))  $parms['where']['province']=$province;
+        if(!empty($city))  $parms['where']['city']=$city;
+        if(!empty($phoneNo))  $parms['where']['phoneNo']=$phoneNo;
         $this->listinfo($parms);
 
     }
@@ -203,23 +218,68 @@ class Admin extends MY_Controller{
         $data['title']='新增客户资料';
         $this->load->view('admin/addclient.html',$data);
         $this->load->view('admin/footer.html');
+    }
+    public function editclient(){
+        $this->load->library('form_validation');
+        $rowid=$this->uri->segment(3);
+        $data['record']=$this->database->getrecord('clients',$rowid);
+        $this->load->view('admin/editclient.html',$data);
+        $this->load->view('admin/footer.html');
 
     }
+
     public function insertclient(){
+        $data=$this->get_client_data();
+        if($data){
+            $status=$this->database->insert_record('clients',$data);
+            if($status){
+                $msg='新增记录成功！';
+                success('admin/clients', $msg);
+            }
+        }else{
+            $this->load->helper('form');//加载显示表单错误类
+            $this->load->view('admin/addclient.html');
+            $this->load->view('admin/footer.html');
+        }
+    }
+    public function updateclient(){
+        $rowid=$this->input->post('rowid');
+        $data=$this->get_client_data();
+        if($data){
+            $status=$this->database->updaterecord('clients',$rowid,$data);
+            if($status)
+            {
+                success('admin/clients','记录更新成功！');
+            }else{
+                error('记录更新失败！');
+            }
+        }else{
+            $this->load->view('admin/editclient.html');
+            $this->load->view('admin/footer.html');
+        }
+    }
+
+
+    public function get_client_data(){
         $this->load->library('form_validation');
         $this->form_validation->set_rules('clientName',"客户姓名",'required');
         $this->form_validation->set_rules('province',"所在省份",'required');
         $this->form_validation->set_rules('city',"所在城市",'required');
         $this->form_validation->set_rules('address',"通讯地址",'required');
         $this->form_validation->set_rules('phoneNo',"联系电话",'required');
+        $this->form_validation->set_rules('remark',"备注信息",'max_length[100]');
         $status=$this->form_validation->run();
-        if($status){
+        if(!$status){
+            return false;
+        }
             $clientName=$this->input->post('clientName');
             $sex=$this->input->post('sex');
             $province=$this->input->post('province');
             $city=$this->input->post('city');
             $address=$this->input->post('address');
             $phoneNo=$this->input->post('phoneNo');
+            $qq=$this->input->post('qq');
+            $remark=$this->input->post('remark');
             $data=array(
                 'rowid'=>strtoupper(md5($clientName.date("Y-m-d H:i:s"))),//采用系统时间+IdentityID的方法
                 'clientName'=>$clientName,
@@ -228,22 +288,283 @@ class Admin extends MY_Controller{
                 'city'=>$city,
                 'address'=>$address,
                 'phoneNo'=>$phoneNo,
+                'qq'=>$qq,
+                'remark'=>$remark,
                 'modDate'	=> time()
             );
-            $status=$this->database->insert_record('clients',$data);
-            if($status){
-                $msg='新增记录成功！';
-                success('admin/clients', $msg);
-            }
+            return $data;
+    }
 
-        }else
-        {
-            $this->load->helper('form');//加载显示表单错误类
-            $this->load->view('admin/addclient.html');
+    public function goods(){
+        $this->load->library('form_validation');
+        $parms['base_url']='admin/goods/';
+        $parms['tablename']='goods';
+        $parms['class']='goods';
+        $parms['html']='admin/goodslist.html';
+        $this->listinfo($parms);
+    }
+    public function addgoods(){
+        $this->load->library('form_validation');
+        $data['title']='新增商品资料';
+        $this->load->view('admin/addgoods.html',$data);
+        $this->load->view('admin/footer.html');
+    }
+    public function editgoods(){
+        $this->load->library('form_validation');
+        $rowid=$this->uri->segment(3);
+        $data['record']=$this->database->getrecord('goods',$rowid);
+        $this->load->view('admin/editgoods.html',$data);
+        $this->load->view('admin/footer.html');
+    }
+    public function updategoods(){
+        $rowid=$this->input->post('rowid');
+        $data=$this->get_goods_data();
+        if($data){
+            $status=$this->database->updaterecord('goods',$rowid,$data);
+            if($status)
+            {
+                success('admin/goods','记录更新成功！');
+            }else{
+                error('记录更新失败！');
+            }
+        }else{
+            $this->load->view('admin/editgoods.html');
             $this->load->view('admin/footer.html');
         }
     }
 
+
+    public function insertgoods(){
+        $data=$this->get_goods_data();
+        if($data){
+            $status=$this->database->insert_record('goods',$data);
+            if($status){
+                $msg='新增记录成功！';
+                success('admin/goods', $msg);
+            }
+        }else{
+            $this->load->helper('form');//加载显示表单错误类
+            $this->load->view('admin/addgoods.html');
+            $this->load->view('admin/footer.html');
+        }
+    }
+    public function get_goods_data(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('goodsName',"商品名称",'required');
+        $this->form_validation->set_rules('unit',"商品单位",'required');
+        $this->form_validation->set_rules('specification',"商品规格",'required');
+        $this->form_validation->set_rules('price',"商品价格",'required|numeric');
+        $status=$this->form_validation->run();
+        if(!$status){
+            return false;
+        }
+        $goodsName=$this->input->post('goodsName');
+        $unit=$this->input->post('unit');
+        $specification=$this->input->post('specification');
+        $price=$this->input->post('price');
+        $remark=$this->input->post('remark');
+        $data=array(
+            'rowid'=>strtoupper(md5($goodsName.date("Y-m-d H:i:s"))),//采用系统时间+IdentityID的方法
+            'goodsName'=>$goodsName,
+            'unit'=>$unit,
+            'specification'=>$specification,
+            'price'=>$price,
+            'remark'=>$remark,
+            'modDate'	=> time()
+        );
+        return $data;
+    }
+    public function logistics(){
+        $this->load->library('form_validation');
+        $parms['base_url']='admin/logistics/';
+        $parms['tablename']='logistics';
+        $parms['class']='logistics';
+        $parms['html']='admin/logisticslist.html';
+        $this->listinfo($parms);
+    }
+    public function addlogistics(){
+        $this->load->library('form_validation');
+        $data['title']='新增物流资料';
+        $this->load->view('admin/addlogistics.html',$data);
+        $this->load->view('admin/footer.html');
+    }
+    public function insertlogistics(){
+        $data=$this->get_logistics_data();
+        if($data){
+            $status=$this->database->insert_record('logistics',$data);
+            if($status){
+                $msg='新增记录成功！';
+                success('admin/logistics', $msg);
+            }
+        }else{
+            $this->load->helper('form');//加载显示表单错误类
+            $this->load->view('admin/addlogistics.html');
+            $this->load->view('admin/footer.html');
+        }
+    }
+    public function editlogistics(){
+        $this->load->library('form_validation');
+        $rowid=$this->uri->segment(3);
+        $data['record']=$this->database->getrecord('logistics',$rowid);
+        $this->load->view('admin/editlogistics.html',$data);
+        $this->load->view('admin/footer.html');
+    }
+    public function updatelogistics(){
+        $rowid=$this->input->post('rowid');
+        $data=$this->get_logistics_data();
+        if($data){
+            $status=$this->database->updaterecord('logistics',$rowid,$data);
+            if($status)
+            {
+                success('admin/logistics','记录更新成功！');
+            }else{
+                error('记录更新失败！');
+            }
+        }else{
+            $this->load->view('admin/editlogistics.html');
+            $this->load->view('admin/footer.html');
+        }
+    }
+
+    public function get_logistics_data(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('logisticsName',"物流名称",'required');
+        $this->form_validation->set_rules('contact',"联系电话",'required');
+        $status=$this->form_validation->run();
+        if(!$status){
+            return false;
+        }
+        $logisticsName=$this->input->post('logisticsName');
+        $address=$this->input->post('address');
+        $contact=$this->input->post('contact');
+        $phoneNo=$this->input->post('phoneNo');
+        $remark=$this->input->post('remark');
+        $data=array(
+            'rowid'=>strtoupper(md5($logisticsName.date("Y-m-d H:i:s"))),//采用系统时间+IdentityID的方法
+            'logisticsName'=>$logisticsName,
+            'address'=>$address,
+            'contact'=>$contact,
+            'phoneNo'=>$phoneNo,
+            'remark'=>$remark,
+            'modDate'	=> time()
+        );
+        return $data;
+    }
+    public function delivers(){
+        $this->load->library('form_validation');
+        $parms['base_url']='admin/delivers/';
+        $parms['tablename']='delivers';
+        $parms['class']='delivers';
+        $parms['html']='admin/deliverslist.html';
+        $clientName=$this->input->post('clientName');
+        $province=$this->input->post('province');
+        $city=$this->input->post('city');
+        $phoneNo=$this->input->post('phoneNo');
+        $goodsName=$this->input->post('goodsName');
+        $logisticsName=$this->input->post('logisticsName');
+        $deliverDate=$this->input->post('deliverDate');
+        $parms['where']=array();
+        if(!empty($clientName)) $parms['where']['clientName']=$clientName;
+        if(!empty($province))  $parms['where']['province']=$province;
+        if(!empty($city))  $parms['where']['city']=$city;
+        if(!empty($phoneNo))  $parms['where']['phoneNo']=$phoneNo;
+        if(!empty($goodsName))  $parms['where']['goodsName']=$goodsName;
+        if(!empty($logisticsName))  $parms['where']['logisticsName']=$logisticsName;
+        if(!empty($deliverDate))  $parms['where']['deliverDate']=$deliverDate;
+        $this->listinfo($parms);
+    }
+
+    public function adddeliver(){
+        $this->load->library('form_validation');
+        $data['title']='新增发货信息';
+        $this->load->view('admin/adddeliver.html',$data);
+        $this->load->view('admin/footer.html');
+    }
+    public function insertdelivers(){
+        $data=$this->get_delivers_data();
+        if($data){
+            $status=$this->database->insert_record('delivers',$data);
+            if($status){
+                $msg='新增记录成功！';
+                success('admin/delivers', $msg);
+            }
+        }else{
+            $this->load->helper('form');//加载显示表单错误类
+            $this->load->view('admin/adddeliver.html');
+            $this->load->view('admin/footer.html');
+        }
+    }
+    public function editdeliver(){
+        $this->load->library('form_validation');
+        $rowid=$this->uri->segment(3);
+        $data['record']=$this->database->getrecord('delivers',$rowid);
+        $this->load->view('admin/editdeliver.html',$data);
+        $this->load->view('admin/footer.html');
+    }
+    public function updatedelivers(){
+        $rowid=$this->input->post('rowid');
+        $data=$this->get_delivers_data();
+        if($data){
+            $status=$this->database->updaterecord('delivers',$rowid,$data);
+            if($status)
+            {
+                success('admin/delivers','记录更新成功！');
+            }else{
+                error('记录更新失败！');
+            }
+        }else{
+            $this->load->view('admin/editdeliver.html');
+            $this->load->view('admin/footer.html');
+        }
+    }
+
+    public function get_delivers_data(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('clientName',"客户名称",'required');
+        $this->form_validation->set_rules('phoneNo',"联系电话",'required');
+        $this->form_validation->set_rules('goodsName',"商品名称",'required');
+        $status=$this->form_validation->run();
+        if(!$status){
+            return false;
+        }
+        $clientName=$this->input->post('clientName');
+        $province=$this->input->post('province');
+        $city=$this->input->post('city');
+        $address=$this->input->post('address');
+        $phoneNo=$this->input->post('phoneNo');
+        $goodsName=$this->input->post('goodsName');
+        $unit=$this->input->post('unit');
+        $price=$this->input->post('price');
+        $quantity=$this->input->post('quantity');
+        $money=$this->input->post('money');
+        $logisticsName=$this->input->post('logisticsName');
+        $waybillNo=$this->input->post('waybillNo');
+        $deliverDate=$this->input->post('deliverDate');
+        $deliveryMan=$this->input->post('deliveryMan');
+        $status=$this->input->post('status');
+        $remark=$this->input->post('remark');
+        $data=array(
+            'rowid'=>strtoupper(md5($logisticsName.date("Y-m-d H:i:s"))),//采用系统时间+IdentityID的方法
+            'clientName'=>$clientName,
+            'province'=>$province,
+            'city'=>$city,
+            'address'=>$address,
+            'phoneNo'=>$phoneNo,
+            'goodsName'=>$goodsName,
+            'unit'=>$unit,
+            'price'=>$price,
+            'quantity'=>$quantity,
+            'money'=>$money,
+            'logisticsName'=>$logisticsName,
+            'waybillNo'=>$waybillNo,
+            'deliverDate'=>$deliverDate,
+            'deliveryMan'=>$deliveryMan,
+            'status'=>$status,
+            'remark'=>$remark,
+            'modDate'	=> time()
+        );
+        return $data;
+    }
 
 
     public function editrecord(){

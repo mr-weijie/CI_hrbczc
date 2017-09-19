@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style/admin/css/css.css') ?>">
+    <title><?php echo isset($title)?$title:''?></title>
+</head>
+<body>
+<div class="flash_side">
+    <div class="con">
+          <form name="form1" id="form1" method="post" action="<?php echo site_url('admin/updatelogistics')?>">
+           <ul>
+                <li>
+                    物流名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="logisticsName" value="<?php echo isset($record[0]['logisticsName'])?$record[0]['logisticsName']:set_value('logisticsName')?>">**
+                </li>
+               <?php echo form_error('logisticsName', '<li class="err">', '</li>') ?>
+               <li>
+                    物流地址:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 60px;height: 25px;margin-top: 5px" name="address" value="<?php echo isset($record[0]['address'])?$record[0]['address']:set_value('address')?>">
+               </li>
+               <li>
+                   &nbsp;&nbsp;&nbsp;联系人:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 60px;height: 25px;margin-top: 5px" name="contact" value="<?php echo isset($record[0]['contact'])?$record[0]['contact']:set_value('contact')?>">
+               </li>
+               <li>
+                   联系电话:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 120px;height: 25px;margin-top: 5px" name="phoneNo" value="<?php echo isset($record[0]['phoneNo'])?$record[0]['phoneNo']:set_value('phoneNo')?>">**
+               </li>
+               <?php echo form_error('phoneNo', '<li class="err">', '</li>') ?>
+               <li>
+                   备注信息:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 300px;height: 25px;margin-top: 5px" name="remark" value="<?php echo isset($record[0]['remark'])?$record[0]['remark']:set_value('remark')?>">
+               </li>
+            </ul>
+            <div style="width:420px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 65px;clear: both;text-align: center">
+                <input type="hidden" name="rowid" value="<?php echo isset($record[0]['rowid'])?$record[0]['rowid']:set_value('rowid')?>">
+                <input type="submit" value="提交">
+            </div>
+        </form>
+    </div>
+</div>

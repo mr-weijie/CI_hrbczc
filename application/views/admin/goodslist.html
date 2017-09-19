@@ -1,0 +1,28 @@
+<div class="flash_side">
+<div class="con">
+    <ul style="width: 700px;height: auto;overflow: auto ">
+        <li >
+            <span style="width: 200px;background-color: #4F97E9;">商品名称</span>
+            <span style="width: 30px;background-color: #4F97E9;">单位</span>
+            <span style="width: 60px;background-color: #4F97E9;">规格</span>
+            <span style="width: 60px; background-color: #4F97E9">单价</span>
+            <span style="width: 200px; background-color: #4F97E9">备注信息</span>
+            <span style="width: 70px;background-color: #4F97E9;text-align: center"><a href="<?php echo site_url('admin/addgoods') ?>">新增</a></span>
+        </li>
+        <?php foreach($info as $item):?>
+        <li>
+            <span style="width: 200px;"><?php echo $item['goodsName'] ?></span>
+            <span style="width: 30px"><?php echo $item['unit'] ?></span>
+            <span style="width: 60px"><?php echo $item['specification'] ?></span>
+            <span style="width: 60px"><?php echo $item['price'] ?></span>
+            <span style="width: 200px"><?php echo $item['remark'] ?></span>
+            <span ><a href="<?php echo site_url('admin/editgoods/'.$item['rowid']) ?>">编辑</a>&nbsp;&nbsp;<a href="<?php echo site_url('admin/deleterecord/'.$tablename.'/'.$item['rowid']) ?>">删除</a> </span>
+        </li>
+        <?php endforeach;?>
+        <li class="rec">
+            <div class="total">共 <?php echo $total_rows ?> 条 显示第 <?php echo isset($cur_page) ?$cur_page:1 ?> 页 <?php echo $offset ?> 条</div>
+            <div class="pages"><?php echo $links ?></div>
+        </li>
+    </ul>
+</div>
+</div>

@@ -11,7 +11,7 @@
           <form name="form1" id="form1" method="post" action="<?php echo site_url('admin/insertclient')?>">
            <ul>
                 <li>
-                    客户姓名:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="clientName" value="<?php echo set_value('clientName')?>">
+                    客户姓名:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="clientName" value="<?php echo set_value('clientName')?>">**
                 </li>
                <?php echo form_error('clientName', '<li class="err">', '</li>') ?>
                <li>
@@ -21,22 +21,30 @@
                        <option value="女">女</option>
                    </select>
                </li>
+               <?php echo form_error('sex', '<li class="err">', '</li>') ?>
                <li>
-                   所在省份:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="province" value="<?php echo set_value('province')?>">
+                   所在省份:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="province" value="<?php echo set_value('province')?>">**
                </li>
                <?php echo form_error('province', '<li class="err">', '</li>') ?>
                <li>
-                   所在城市:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="city" value="<?php echo set_value('city')?>">
+                   所在城市:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="city" value="<?php echo set_value('city')?>">**
                </li>
                <?php echo form_error('city', '<li class="err">', '</li>') ?>
                <li>
-                   通讯地址:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 300px;height: 25px;margin-top: 5px" name="address" value="<?php echo set_value('address')?>">
+                   通讯地址:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 300px;height: 25px;margin-top: 5px" name="address" value="<?php echo set_value('address')?>">**
                </li>
                <?php echo form_error('address', '<li class="err">', '</li>') ?>
                <li>
-                   联系电话:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 200px;height: 25px;margin-top: 5px" name="phoneNo" value="<?php echo set_value('phoneNo')?>">
+                   联系电话:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 200px;height: 25px;margin-top: 5px" name="phoneNo" value="<?php echo set_value('phoneNo')?>">**
                </li>
                <?php echo form_error('phoneNo', '<li class="err">', '</li>') ?>
+               <li>
+                   联系&nbsp;QQ:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 200px;height: 25px;margin-top: 5px" name="qq" value="<?php echo set_value('qq')?>">
+               </li>
+               <li>
+                   备注信息:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 400px;height: 25px;margin-top: 5px" name="remark" value="<?php echo set_value('remark')?>">
+               </li>
+               <?php echo form_error('remark', '<li class="err">', '</li>') ?>
             </ul>
             <div style="width:420px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 65px;clear: both;text-align: center">
                 <input type="submit" value="提交">

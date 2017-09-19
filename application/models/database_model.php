@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Created by PhpStorm.
  * User: Administrator
@@ -83,8 +84,8 @@ class Database_model extends CI_Model{
 
     }
 
-    public function getrecords($tablename){
-        $data=$this->db->order_by('modDate','desc')->get($tablename)->result_array();
+    public function getrecords($tablename,$where){
+        $data=$this->db->like($where,'both')->order_by('modDate','desc')->get($tablename)->result_array();
         return $data;
 
     }

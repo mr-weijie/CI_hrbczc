@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="flash_side">
-    <div class="con">
+    <div>
         <?php
         $tablename=isset($tablename)?$tablename:set_value('tablename');
         $rowid=isset($record[0]['rowid'])?$record[0]['rowid']:set_value('rowid');
@@ -41,7 +41,7 @@
           <form name="form1" method="post" action="<?php echo site_url('admin/updaterecord')?>">
            <ul>
           <?php if($tablename!='news') {?>
-               <li style=" width: 720px; text-align: center">
+               <li style=" width: 720px; text-align: center;">
                    <img src="<?php echo base_url('assets/images/'.$pics)?>">
                    <input type="hidden" name="pics" value="<?php echo $pics?>">
                </li>
@@ -57,15 +57,15 @@
                     <span style="float: left; clear: both">
                         <?php echo isset($title1)?$title1:set_value('title1') ?>:
                     </span>
-                    <span style="float: left">
-                        <textarea name="content" id="content" style="width: 818px;height: 300px; border: 1px solid;border-color: #3B96CB;">
+                    <span style="float: left;margin-left: 5px">
+                        <textarea name="content" id="content" style="width: 818px;height: 300px; border: 1px solid;border-color: #3B96CB;margin-top: 10px">
                             <?php echo isset($record[0]['content'])?$record[0]['content']:set_value('content')?>
                         </textarea>
                     </span>
                     <input type="hidden" name="title1" value="<?php echo isset($title1)?$title1:set_value('title1') ?>">
                 </li>
             </ul>
-            <div style="width:820px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 65px;clear: both;text-align: center">
+            <div style="width:820px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 105px;clear: both;text-align: center;">
                 <input type="hidden" name="rowid" value="<?php echo isset($record[0]['rowid'])?$record[0]['rowid']:set_value('rowid')?>">
                 <input type="hidden" name="tablename" value="<?php echo $tablename?>">
                 <input type="submit" name="submit" value="提交">

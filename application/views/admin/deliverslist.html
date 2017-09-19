@@ -1,0 +1,64 @@
+<div class="flash_side">
+<div class="con">
+    <ul style="width: 1400px;height: auto;overflow: auto ">
+        <li >
+            <span style="width: 60px;background-color: #4F97E9;">客户姓名</span>
+            <span style="width: 30px;background-color: #4F97E9;">省份</span>
+            <span style="width: 30px;background-color: #4F97E9;">城市</span>
+            <span style="width: 200px;background-color: #4F97E9;">收货地址</span>
+            <span style="width: 120px; background-color: #4F97E9">电话</span>
+            <span style="width: 120px; background-color: #4F97E9">商品名称</span>
+            <span style="width: 30px;background-color: #4F97E9">单位</span>
+            <span style="width: 30px;background-color: #4F97E9">数量</span>
+            <span style="width: 50px;background-color: #4F97E9">单价</span>
+            <span style="width: 50px;background-color: #4F97E9">金额</span>
+            <span style="width: 60px;background-color: #4F97E9">物流名称</span>
+            <span style="width: 150px;background-color: #4F97E9">运单号</span>
+            <span style="width: 80px;background-color: #4F97E9">发货日期</span>
+            <span style="width: 60px;background-color: #4F97E9">发货人</span>
+            <span style="width: 50px;background-color: #4F97E9">状态</span>
+            <span style="width: 70px;background-color: #4F97E9;text-align: center"><a href="<?php echo site_url('admin/adddeliver') ?>">新增</a></span>
+        </li>
+        <?php foreach($info as $item):?>
+        <li style="float: left;overflow: hidden">
+            <span style="width: 60px;"><?php echo $item['clientName'] ?></span>
+            <span style="width: 30px;"><?php echo $item['province'] ?></span>
+            <span style="width: 30px;"><?php echo $item['city'] ?></span>
+            <span style="width: 200px;"><?php echo $item['address'] ?></span>
+            <span style="width: 120px;"><?php echo $item['phoneNo'] ?></span>
+            <span style="width: 120px;"><?php echo $item['goodsName'] ?></span>
+            <span style="width: 30px;"><?php echo $item['unit'] ?></span>
+            <span style="width: 30px;"><?php echo $item['quantity'] ?></span>
+            <span style="width: 50px;"><?php echo $item['price'] ?></span>
+            <span style="width: 50px;"><?php echo $item['money'] ?></span>
+            <span style="width: 60px;"><?php echo $item['logisticsName'] ?></span>
+            <span style="width: 150px;"><?php echo $item['waybillNo'] ?></span>
+            <span style="width: 80px;"><?php echo $item['deliverDate'] ?></span>
+            <span style="width: 60px;"><?php echo $item['deliveryMan'] ?></span>
+            <span style="width: 50px;"><?php echo ($item['status']==1)?'已发货':'待发货' ?></span>
+            <span style="width: 70px;"><a href="<?php echo site_url('admin/editdeliver/'.$item['rowid']) ?>">编辑</a>&nbsp;&nbsp;<a href="<?php echo site_url('admin/deleterecord/'.$tablename.'/'.$item['rowid']) ?>">删除</a> </span>
+        </li>
+        <?php endforeach;?>
+        <li class="rec">
+            <div class="total">共 <?php echo $total_rows ?> 条 显示第 <?php echo isset($cur_page) ?$cur_page:1 ?> 页 <?php echo $offset ?> 条</div>
+            <div class="pages"><?php echo $links ?></div>
+        </li>
+    </ul>
+</div>
+    <div style="width: 1360px;height: 30px;background-color: #4F97E9">
+        <ul style="width:auto;height: auto;overflow: auto ">
+            <form name="form1" method="post" action="<?php echo site_url('admin/delivers') ?>">
+                <li style="height: 30px;line-height: 30px">
+                    <span style="width: 60px;background-color: #4F97E9;">客户姓名:<input type="text" style="border: 1px solid;border-color: #3b4249;width: 60px;height: 16px;line-height: 16px" name="clientName" value="<?php echo set_value('clientName') ?>"></span>
+                    <span style="width: 60px;background-color: #4F97E9;">省份:<input type="text" style="border: 1px solid;border-color: #3b4249;width: 60px;height: 16px;line-height: 16px" name="province" value="<?php echo set_value('province') ?>"></span>
+                    <span style="width: 60px; background-color: #4F97E9">城市:<input type="text" style="border: 1px solid;border-color: #3b4249;width: 60px;height: 16px;line-height: 16px" name="city" value="<?php echo set_value('city') ?>"></span>
+                    <span style="width: 60px;background-color: #4F97E9">商品名称:<input type="text" style="border: 1px solid;border-color: #3b4249;width: 100px;height: 16px;line-height: 16px" name="goodsName" value="<?php echo set_value('goodsName') ?>"></span>
+                    <span style="width: 60px;background-color: #4F97E9">物流名称:<input type="text" style="border: 1px solid;border-color: #3b4249;width: 100px;height: 16px;line-height: 16px" name="logisticsName" value="<?php echo set_value('logisticsName') ?>"></span>
+                    <span style="width: 60px;background-color: #4F97E9">发货日期:<input type="text" style="border: 1px solid;border-color: #3b4249;width: 100px;height: 16px;line-height: 16px" name="deliverDate" value="<?php echo set_value('deliverDate') ?>"></span>
+                    <span style="width: 60px;background-color: #4F97E9">联系电话:<input type="text" style="border: 1px solid;border-color: #3b4249;width: 100px;height: 16px;line-height: 16px" name="phoneNo" value="<?php echo set_value('phoneNo') ?>"></span>
+                    <span style="width: 70px;background-color: #4F97E9;text-align: center"><input type="submit" name="submit" value="查找"></span>
+                </li>
+            </form>
+        </ul>
+    </div>
+</div>

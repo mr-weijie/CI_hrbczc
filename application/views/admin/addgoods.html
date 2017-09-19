@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style/admin/css/css.css') ?>">
+    <title><?php echo isset($title)?$title:''?></title>
+</head>
+<body>
+<div class="flash_side">
+    <div class="con">
+          <form name="form1" id="form1" method="post" action="<?php echo site_url('admin/insertgoods')?>">
+           <ul>
+                <li>
+                    商品名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 200px;height: 25px;margin-top: 5px" name="goodsName" value="<?php echo set_value('goodsName')?>">**
+                </li>
+               <?php echo form_error('goodsName', '<li class="err">', '</li>') ?>
+               <li>
+                   商品单位:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 60px;height: 25px;margin-top: 5px" name="unit" value="<?php echo set_value('unit')?>">**
+               </li>
+               <?php echo form_error('unit', '<li class="err">', '</li>') ?>
+               <li>
+                   商品规格:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="specification" value="<?php echo set_value('specification')?>">**
+               </li>
+               <?php echo form_error('specification', '<li class="err">', '</li>') ?>
+               <li>
+                   商品单价:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height: 25px;margin-top: 5px" name="price" value="<?php echo set_value('price')?>">**
+               </li>
+               <?php echo form_error('price', '<li class="err">', '</li>') ?>
+               <li>
+                   备注信息:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 200px;height: 25px;margin-top: 5px" name="remark" value="<?php echo set_value('remark')?>">
+               </li>
+            </ul>
+            <div style="width:320px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 65px;clear: both;text-align: center">
+                <input type="submit" value="提交">
+            </div>
+        </form>
+    </div>
+</div>

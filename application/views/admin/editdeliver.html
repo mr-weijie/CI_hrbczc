@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style/admin/css/css.css') ?>">
+    <title><?php echo isset($title)?$title:''?></title>
+</head>
+<body>
+<div class="flash_side">
+    <div class="con">
+          <form name="form1" id="form1" method="post" action="<?php echo site_url('admin/updatedelivers')?>">
+           <ul>
+               <li>
+                    客户名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="clientName" value="<?php echo isset($record[0]['clientName'])?$record[0]['clientName']:set_value('clientName')?>">**
+                </li>
+               <?php echo form_error('clientName', '<li class="err">', '</li>') ?>
+               <li>
+                   所在省份:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 60px;height: 25px;margin-top: 5px" name="province" value="<?php echo isset($record[0]['province'])?$record[0]['province']:set_value('province')?>">
+               </li>
+               <li>
+                所在城市:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 60px;height: 25px;margin-top: 5px" name="city" value="<?php echo isset($record[0]['city'])?$record[0]['city']:set_value('city')?>">
+               </li>
+               <li>
+                   收货地址:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 300px;height: 25px;margin-top: 5px" name="address" value="<?php echo isset($record[0]['address'])?$record[0]['address']:set_value('address')?>">
+               </li>
+               <li>
+                   联系电话:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 150px;height: 25px;margin-top: 5px" name="phoneNo" value="<?php echo isset($record[0]['phoneNo'])?$record[0]['phoneNo']:set_value('phoneNo')?>">**
+               </li>
+               <?php echo form_error('phoneNo', '<li class="err">', '</li>') ?>
+               <li>
+                   商品名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 150px;height: 25px;margin-top: 5px" name="goodsName" value="<?php echo isset($record[0]['goodsName'])?$record[0]['goodsName']:set_value('goodsName')?>">**
+               </li>
+               <?php echo form_error('goodsName', '<li class="err">', '</li>') ?>
+               <li>
+                   商品单位:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 30px;height: 25px;margin-top: 5px" name="unit" value="<?php echo isset($record[0]['unit'])?$record[0]['unit']:set_value('unit')?>">
+               </li>
+               <li>
+                   商品单价:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 30px;height: 25px;margin-top: 5px" name="price" value="<?php echo isset($record[0]['price'])?$record[0]['price']:set_value('price')?>">
+               </li>
+               <li>
+                   发货数量:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height: 25px;margin-top: 5px" name="quantity" value="<?php echo isset($record[0]['quantity'])?$record[0]['quantity']:set_value('quantity')?>">
+               </li>
+               <li>
+                   发货金额:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height: 25px;margin-top: 5px" name="money" value="<?php echo isset($record[0]['money'])?$record[0]['money']:set_value('money')?>">
+               </li>
+               <li>
+                   物流名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="logisticsName" value="<?php echo isset($record[0]['logisticsName'])?$record[0]['logisticsName']:set_value('logisticsName')?>">
+               </li>
+               <li>
+                   运单号码:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 120px;height: 25px;margin-top: 5px" name="waybillNo" value="<?php echo isset($record[0]['waybillNo'])?$record[0]['waybillNo']:set_value('waybillNo')?>">
+               </li>
+               <li>
+                   发货人员:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 80px;height: 25px;margin-top: 5px" name="deliveryMan" value="<?php echo isset($record[0]['deliveryMan'])?$record[0]['deliveryMan']:set_value('deliveryMan')?>">
+               </li>
+               <li>
+                   发货日期:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 80px;height: 25px;margin-top: 5px" name="deliverDate" value="<?php echo isset($record[0]['deliverDate'])?$record[0]['deliverDate']:set_value('deliverDate')?>">
+               </li>
+               <li>
+                   发货状态:<?php $status=isset($record[0]['status'])?$record[0]['status']:set_value('status0') ?>
+                   <select name="status" style="border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                        <option value="1" <?php if($status==1) echo 'selected'?>>已发货</option>
+                        <option value="0" <?php if($status==0) echo 'selected'?>>待发货</option>
+                   </select>
+                   <input type="hidden" name="status0" value="<?php echo isset($record[0]['status'])?$record[0]['status']:set_value('status0')?>">
+               </li>
+               <li>
+                   备注信息:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 300px;height: 25px;margin-top: 5px" name="remark" value="<?php echo isset($record[0]['remark'])?$record[0]['remark']:set_value('remark')?>">
+             </li>
+            </ul>
+              <div style="width:420px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 65px;clear: both;text-align: center">
+                  <input type="hidden" name="rowid" value="<?php echo isset($record[0]['rowid'])?$record[0]['rowid']:set_value('rowid')?>">
+                  <input type="submit" value="提交">
+              </div>
+          </form>
+    </div>
+</div>

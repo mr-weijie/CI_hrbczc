@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style/admin/css/css.css') ?>">
+    <title><?php echo isset($title)?$title:''?></title>
+</head>
+<body>
+<div class="flash_side">
+    <div class="con">
+          <form name="form1" id="form1" method="post" action="<?php echo site_url('admin/insertdelivers')?>">
+           <ul>
+               <li>
+                    客户名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="clientName" value="<?php echo set_value('clientName')?>">**
+                </li>
+               <?php echo form_error('clientName', '<li class="err">', '</li>') ?>
+               <li>
+                   所在省份:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 60px;height: 25px;margin-top: 5px" name="province" value="<?php echo set_value('province')?>">
+               </li>
+               <li>
+                   所在城市:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 60px;height: 25px;margin-top: 5px" name="city" value="<?php echo set_value('city')?>">
+               </li>
+               <li>
+                   收货地址:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 300px;height: 25px;margin-top: 5px" name="address" value="<?php echo set_value('address')?>">
+               </li>
+               <li>
+                   联系电话:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 150px;height: 25px;margin-top: 5px" name="phoneNo" value="<?php echo set_value('phoneNo')?>">**
+               </li>
+               <?php echo form_error('phoneNo', '<li class="err">', '</li>') ?>
+               <li>
+                   商品名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 150px;height: 25px;margin-top: 5px" name="goodsName" value="<?php echo set_value('goodsName')?>">**
+               </li>
+               <?php echo form_error('goodsName', '<li class="err">', '</li>') ?>
+               <li>
+                   商品单位:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 30px;height: 25px;margin-top: 5px" name="unit" value="<?php echo set_value('unit')?>">
+               </li>
+               <li>
+                   商品单价:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height:25px;margin-top: 5px" name="price" value="<?php echo set_value('price')?>">
+               </li>
+               <li>
+                   发货数量:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height: 25px;margin-top: 5px" name="quantity" value="<?php echo set_value('quantity')?>">
+               </li>
+               <li>
+                   发货金额:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 80px;height: 25px;margin-top: 5px" name="money" value="<?php echo set_value('money')?>">
+               </li>
+               <li>
+                   物流名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="logisticsName" value="<?php echo set_value('logisticsName')?>">
+               </li>
+               <li>
+                   运单号码:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 120px;height: 25px;margin-top: 5px" name="waybillNo" value="<?php echo set_value('waybillNo')?>">
+               </li>
+               <li>
+                   发货人员:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 80px;height: 25px;margin-top: 5px" name="deliveryMan" value="<?php echo set_value('deliveryMan')?>">
+               </li>
+               <li>
+                   发货日期:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 80px;height: 25px;margin-top: 5px" name="deliverDate" value="<?php echo set_value('deliverDate')?>">
+               </li>
+               <li>
+                   发货状态:
+                   <select name="sex" style="border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                   <option value="1" selected>已发货</option>
+                   <option value="0">待发货</option>
+               </select>
+               </li>
+               <li>
+                   备注信息:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 300px;height: 25px;margin-top: 5px" name="remark" value="<?php echo set_value('remark')?>">
+               </li>
+            </ul>
+            <div style="width:320px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 65px;clear: both;text-align: center">
+                <input type="submit" value="提交">
+            </div>
+        </form>
+    </div>
+</div>
