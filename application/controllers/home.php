@@ -18,8 +18,8 @@ class Home extends CI_Controller {
         $data['title']='哈尔滨醇正醇酒曲厂';
         $data['sysinfo']=$this->database->getsysinfo();
         $data['news']=$this->database->getnewslist_top(4);
-        $data['products']=$this->database->getrecords('products');
-        $data['cases']=$this->database->getrecords('cases');
+        $data['products']=$this->database->getrecords('products',array());
+        $data['cases']=$this->database->getrecords('cases',array());
         $this->load->view('header.html',$data);
         $this->load->view('index/nav.html');
         $this->load->view('index/ad.html');

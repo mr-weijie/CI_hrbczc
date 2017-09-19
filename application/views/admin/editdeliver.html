@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style/admin/css/css.css') ?>">
+    <script type="text/javascript" src="<?php echo base_url('assets/style/admin/js/jquery-1.7.2.min.js') ?>"></script>
     <title><?php echo isset($title)?$title:''?></title>
 </head>
 <body>
@@ -11,7 +12,7 @@
           <form name="form1" id="form1" method="post" action="<?php echo site_url('admin/updatedelivers')?>">
            <ul>
                <li>
-                    客户名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="clientName" value="<?php echo isset($record[0]['clientName'])?$record[0]['clientName']:set_value('clientName')?>">**
+                    客户名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="clientName" id="clientName" value="<?php echo isset($record[0]['clientName'])?$record[0]['clientName']:set_value('clientName')?>">**
                 </li>
                <?php echo form_error('clientName', '<li class="err">', '</li>') ?>
                <li>
@@ -74,3 +75,35 @@
           </form>
     </div>
 </div>
+
+<form>
+    <label for="searchKey" id="lbSearch">搜神马？</label> 这里label覆盖在文本框上，可以更好的控制样式
+    <input id="searchKey" type="text" />
+    <input type="submit" value="搜索" />
+</form>
+<script>
+    $(function() {
+        $('#searchKey').focus(function() {
+            $('#lbSearch').text('');
+        });
+        $('#clientName').blur(function() {
+            ajax()
+        });
+    })
+</script>
+<script>
+    function ajax() {
+        $.ajax({
+            type: "POST",
+            url: "register.php",
+            data: "name=John&location=Boston",
+            success: function(msg){
+                alert( "Data Saved: " + msg );
+            },
+            error:function(msg){
+                alert('请求发生错误');
+            }
+
+        });
+    }
+</script>
