@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style/admin/css/css.css') ?>">
+    <script type="text/javascript" src="<?php echo base_url('assets/style/admin/js/jquery-1.7.2.min.js') ?>"></script>
     <title><?php echo isset($title)?$title:''?></title>
 </head>
 <body>
@@ -11,37 +12,62 @@
           <form name="form1" id="form1" method="post" action="<?php echo site_url('admin/insertdelivers')?>">
            <ul>
                <li>
-                    客户名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="clientName" value="<?php echo set_value('clientName')?>">**
-                </li>
-               <?php echo form_error('clientName', '<li class="err">', '</li>') ?>
-               <li>
-                   所在省份:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 60px;height: 25px;margin-top: 5px" name="province" value="<?php echo set_value('province')?>">
+                   所在省份:
+                   <select name="province" id="province" style="width: 80px; border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                       <?php foreach($province as $item): ?>
+                           <option value="<?php echo $item['provinceId'] ?>" ><?php echo $item['province'] ?></option>
+                       <?php endforeach;?>
+                   </select>
                </li>
                <li>
-                   所在城市:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 60px;height: 25px;margin-top: 5px" name="city" value="<?php echo set_value('city')?>">
+                   所在城市:
+                   <select name="city" id="city" style="width: 80px; border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                   </select>
                </li>
                <li>
-                   收货地址:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 300px;height: 25px;margin-top: 5px" name="address" value="<?php echo set_value('address')?>">
+                   客户名称:
+                   <select name="clientName" id="clientName" style="width: 80px; border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                   </select>
                </li>
                <li>
-                   联系电话:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 150px;height: 25px;margin-top: 5px" name="phoneNo" value="<?php echo set_value('phoneNo')?>">**
+                   收货地址:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 300px;height: 25px;margin-top: 5px" name="address" id="address" value="<?php echo set_value('address')?>">
+               </li>
+               <li>
+                   联系电话:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 150px;height: 25px;margin-top: 5px" name="phoneNo" id="phoneNo" value="<?php echo set_value('phoneNo')?>">**
                </li>
                <?php echo form_error('phoneNo', '<li class="err">', '</li>') ?>
                <li>
-                   商品名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 150px;height: 25px;margin-top: 5px" name="goodsName" value="<?php echo set_value('goodsName')?>">**
+                   商品名称:
+                   <select name="goodsName" id="goodsName" style="width: 180px; border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                       <?php
+                       $tmpStr='';
+                       foreach($goods as $item):
+                        $goodsName=$item['goodsName'];
+                        if(!strpos($tmpStr,'/'.$goodsName.'/')){//排除掉重复的商品
+                        $tmpStr.='/'.$goodsName.'/';
+                        ?>
+                       <option value="<?php echo $item['goodsName'] ?>" ><?php echo $item['goodsName'] ?></option>
+                       <?php } endforeach;?>
+                   </select>**
                </li>
-               <?php echo form_error('goodsName', '<li class="err">', '</li>') ?>
                <li>
-                   商品单位:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 30px;height: 25px;margin-top: 5px" name="unit" value="<?php echo set_value('unit')?>">
+                   商品规格:
+                   <select name="specification" id="specification" style="width: 100px; border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                   </select>
                </li>
                <li>
-                   商品单价:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height:25px;margin-top: 5px" name="price" value="<?php echo set_value('price')?>">
+                   商品单位:
+                   <select name="unit" id="unit" style="width: 50px; border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                   </select>
                </li>
                <li>
-                   发货数量:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height: 25px;margin-top: 5px" name="quantity" value="<?php echo set_value('quantity')?>">
+                   商品单价:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height:25px;margin-top: 5px" name="price" id="price" value="<?php echo set_value('price')?>">
                </li>
                <li>
-                   发货金额:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 80px;height: 25px;margin-top: 5px" name="money" value="<?php echo set_value('money')?>">
+                   发货数量:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height: 25px;margin-top: 5px" name="quantity" id="quantity" value="<?php echo set_value('quantity')?>">
+               </li>
+               <li>
+                   发货金额:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 80px;height: 25px;margin-top: 5px" name="money" id="money" value="<?php echo set_value('money')?>">
                </li>
                <li>
                    物流名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="logisticsName" value="<?php echo set_value('logisticsName')?>">
@@ -72,3 +98,161 @@
         </form>
     </div>
 </div>
+
+<script>
+    $(function() {
+        $('#province').blur(function() {
+            setcity(this.value)
+        });
+        $('#city').blur(function() {
+            setclient(this.value)
+        });
+        $('#clientName').blur(function() {
+            if(this.value==''){
+                $('#address').val('');
+                $('#phoneNo').val('');
+                return;
+            }
+            setclientInfo(this.value)
+        });
+
+        $('#clientName').change(function() {
+            if(this.value==''){
+                $('#address').val('');
+                $('#phoneNo').val('');
+                return;
+            }
+            setclientInfo(this.value)
+        });
+
+        $('#goodsName').blur(function() {
+            if(this.value==''){
+                $('#specification').empty();
+                $('#unit').empty();
+                $('#price').val('');
+                return;
+            }
+            setSpecificationInfo(this.value)
+        });
+
+        $('#goodsName').change(function() {
+            setSpecificationInfo(this.value)
+        });
+
+        $('#price').blur(function() {
+         //   if(this.value=='') this.val(0);
+         //   if($('#quantity').value=='') $('#quantity').val(0);
+            var price=this.value;
+            var quantity=$('#quantity').value;
+
+            if(isNaN(price)&&isNaN(quantity)){
+                var money=price*quantity;
+                $('#money').val(money);
+            }
+
+
+        });
+
+    })
+</script>
+<script>
+    function setcity(value) {
+        var tableName='citys';
+        var where="fieldName=provinceId&value="+value;
+        $.ajax({
+            type:'POST',
+            url: '<?php echo site_url("admin/getselectinfo")?>',
+            data: 'tableName='+tableName+"&"+where,
+            dataType: "json",
+            success: function(msg){
+                $("#city").empty();
+                for (var i = 0; i < msg.length; i++) {
+                    $("#city").append("<option value='"+msg[i].cityName+"'>" + msg[i].cityName + "</option>");
+                }
+
+            },
+            error:function(msg){
+                alert('请求发生错误');
+            }
+       });
+    }
+    function setclient(value) {
+        var tableName='clients';
+        var where="fieldName=city&value="+value;
+        $.ajax({
+            type:'POST',
+            url: '<?php echo site_url("admin/getselectinfo")?>',
+            data: 'tableName='+tableName+"&"+where,
+            dataType: "json",
+            success: function(msg){
+                $("#clientName").empty();
+                for (var i = 0; i < msg.length; i++) {
+                    $("#clientName").append("<option value='"+msg[i].clientName+"'>" + msg[i].clientName + "</option>");
+                }
+
+            },
+            error:function(msg){
+                alert('请求发生错误');
+            }
+        });
+    }
+
+    function setclientInfo(value) {
+        var tableName='clients';
+        var where="fieldName=clientName&value="+value;
+        $.ajax({
+            type:'POST',
+            url: '<?php echo site_url("admin/getselectinfo")?>',
+            data: 'tableName='+tableName+"&"+where,
+            dataType: "json",
+            success: function(msg){
+                $('#address').val(msg[0].address);
+                $('#phoneNo').val(msg[0].phoneNo);
+            },
+            error:function(msg){
+                alert('请求发生错误');
+            }
+        });
+    }
+    function setSpecificationInfo(value) {
+        var tableName='goods';
+        var where="fieldName=goodsName&value="+value;
+        $.ajax({
+            type:'POST',
+            url: '<?php echo site_url("admin/getselectinfo")?>',
+            data: 'tableName='+tableName+"&"+where,
+            dataType: "json",
+            success: function(msg){
+                $("#specification").empty();
+                $("#unit").empty();
+                //设置规格信息
+                var tmpStr='';
+                for (var i = 0; i < msg.length; i++) {
+                    var specification=msg[i].specification;
+                    if(tmpStr.indexOf('/'+specification+'/')==-1){
+                        tmpStr+='/'+specification+'/';
+                        $("#specification").append("<option value='"+specification+"'>" + specification + "</option>");
+                    }
+                }
+
+                //设置单位信息
+                var tmpStr='';
+                for (var i = 0; i < msg.length; i++) {
+                    var unit=msg[i].unit;
+                    if(tmpStr.indexOf('/'+unit+'/')==-1){
+                        tmpStr+='/'+unit+'/';
+                        $("#unit").append("<option value='"+unit+"'>" + unit + "</option>");
+                    }
+                }
+
+
+            },
+            error:function(msg){
+                alert('请求发生错误');
+            }
+        });
+    }
+
+
+
+</script>

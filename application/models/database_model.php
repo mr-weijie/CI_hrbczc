@@ -95,6 +95,11 @@ class Database_model extends CI_Model{
         return $status;
 
     }
+    public function getClientInfo($clientName){
+        $data=$this->db->where(array('clientName'=>$clientName))->get('clients')->result_array();
+        return $data;
+
+    }
 
 
 

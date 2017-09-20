@@ -477,6 +477,8 @@ class Admin extends MY_Controller{
     public function adddeliver(){
         $this->load->library('form_validation');
         $data['title']='新增发货信息';
+        $data['province']=$this->database->getrecords('provinces',array());
+        $data['goods']=$this->database->getrecords('goods',array());
         $this->load->view('admin/adddeliver.html',$data);
         $this->load->view('admin/footer.html');
     }
@@ -697,6 +699,26 @@ class Admin extends MY_Controller{
         }
     }
 
+    public function getselectinfo(){
+        $tableName=$this->input->post('tableName');
+        $fieldName=$this->input->post('fieldName');
+        $value=$this->input->post('value');
+        $where=array(
+            $fieldName=>$value
+        );
+        $data=$this->database->getrecords($tableName,$where);
+        $this->output->set_header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($data);
+
+    }
+
+    public function getClientInfo(){
+        $clientName=$this->input->post('clientName');
+        $data=$this->database->getClientInfo($clientName);
+        $this->output->set_header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($data);
+
+    }
 
 
 
