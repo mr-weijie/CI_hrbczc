@@ -14,24 +14,36 @@
                <li>
                    所在省份:
                    <select name="province" id="province" style="width: 80px; border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
-                       <?php foreach($province as $item): ?>
-                           <option value="<?php echo $item['provinceId'] ?>" ><?php echo $item['province'] ?></option>
+                       <?php
+                        $provinceId0=set_value('province');
+                       foreach($province as $item):?>
+                           <option value="<?php echo $item['provinceId']; ?>" <?php if($provinceId0==$item['provinceId']) echo 'selected'?>><?php echo $item['province'] ?></option>
                        <?php endforeach;?>
                    </select>
                </li>
                <li>
                    所在城市:
                    <select name="city" id="city" style="width: 80px; border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                       <?php
+                       $city=set_value('city');
+                       if(strlen($city)>0) {?>
+                               <option value="<?php echo $city ?>" selected><?php echo $city ?></option>
+                       <?php }?>
                    </select>
                </li>
-               <li>
+               <li style="width:190px;">
                    客户名称:
                    <select name="clientName" id="clientName" style="width: 80px; border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
-                   </select>
-               </li>
+                       <?php
+                       $clientName=set_value('clientName');
+                       if(strlen($clientName)>0) {?>
+                       <option value="<?php echo $clientName ?>" selected><?php echo $clientName ?></option>
+                       <?php }?>
+                   </select>**<span id="span_sex" style="float: right; margin-top: 3px;color: #aa1111"></span><input type="hidden" name="sex" id="sex" value="<?php echo set_value('sex') ?>">
+               </li><?php echo form_error('clientName', '<li class="err">', '</li>') ?>
                <li>
-                   收货地址:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 300px;height: 25px;margin-top: 5px" name="address" id="address" value="<?php echo set_value('address')?>">
-               </li>
+                   收货地址:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 300px;height: 25px;margin-top: 5px" name="address" id="address" value="<?php echo set_value('address')?>">**
+               </li><?php echo form_error('address', '<li class="err">', '</li>') ?>
                <li>
                    联系电话:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 150px;height: 25px;margin-top: 5px" name="phoneNo" id="phoneNo" value="<?php echo set_value('phoneNo')?>">**
                </li>
@@ -49,28 +61,50 @@
                        <option value="<?php echo $item['goodsName'] ?>" ><?php echo $item['goodsName'] ?></option>
                        <?php } endforeach;?>
                    </select>**
-               </li>
+               </li><?php echo form_error('goodsName', '<li class="err">', '</li>') ?>
                <li>
                    商品规格:
                    <select name="specification" id="specification" style="width: 100px; border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                       <?php
+                       $specification=set_value('specification');
+                       if(strlen($specification)>0) {?>
+                       <option value="<?php echo $specification ?>" selected><?php echo $specification ?></option>
+                       <?php }?>
                    </select>
                </li>
                <li>
                    商品单位:
                    <select name="unit" id="unit" style="width: 50px; border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                       <?php
+                       $unit=set_value('unit');
+                       if(strlen($unit)>0) {?>
+                       <option value="<?php echo $unit ?>" selected><?php echo $unit ?></option>
+                       <?php }?>
                    </select>
                </li>
                <li>
-                   商品单价:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height:25px;margin-top: 5px" name="price" id="price" value="<?php echo set_value('price')?>">
-               </li>
+                   商品单价:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height:25px;margin-top: 5px" name="price" id="price" value="<?php echo set_value('price')?>">**
+               </li><?php echo form_error('price', '<li class="err">', '</li>') ?>
                <li>
-                   发货数量:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height: 25px;margin-top: 5px" name="quantity" id="quantity" value="<?php echo set_value('quantity')?>">
-               </li>
+                   发货数量:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 50px;height: 25px;margin-top: 5px" name="quantity" id="quantity" value="<?php echo set_value('quantity')?>">**
+               </li><?php echo form_error('quantity', '<li class="err">', '</li>') ?>
                <li>
                    发货金额:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 80px;height: 25px;margin-top: 5px" name="money" id="money" value="<?php echo set_value('money')?>">
                </li>
                <li>
-                   物流名称:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 100px;height: 25px;margin-top: 5px" name="logisticsName" value="<?php echo set_value('logisticsName')?>">
+                   物流名称:
+                   <select name="logisticsName" id="logisticsName" style="width: 100px; border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                       <?php
+                       $logisticsName0=set_value('logisticsName');
+                       $tmpStr='';
+                       foreach($logistics as $item):
+                        $logisticsName=$item['logisticsName'];
+                        if(!strpos($tmpStr,'/'.$logisticsName.'/')){//排除掉重复
+                        $tmpStr.='/'.$logisticsName.'/';
+                        ?>
+                       <option value="<?php echo $item['logisticsName'] ?>" <?php if($logisticsName0==$item['logisticsName']) echo 'selected'?>><?php echo $item['logisticsName'] ?></option>
+                       <?php } endforeach;?>
+                   </select>
                </li>
                <li>
                    运单号码:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 120px;height: 25px;margin-top: 5px" name="waybillNo" value="<?php echo set_value('waybillNo')?>">
@@ -79,13 +113,14 @@
                    发货人员:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 80px;height: 25px;margin-top: 5px" name="deliveryMan" value="<?php echo set_value('deliveryMan')?>">
                </li>
                <li>
-                   发货日期:<input type="text" style="border: 1px solid;border-color: #4F97E9;width: 80px;height: 25px;margin-top: 5px" name="deliverDate" value="<?php echo set_value('deliverDate')?>">
+                   发货日期:<input type="date" style="border: 1px solid;border-color: #4F97E9;width: 120px;height: 25px;margin-top: 5px" name="deliverDate" id="deliverDate" value="<?php echo set_value('deliverDate')?>">
                </li>
                <li>
                    发货状态:
-                   <select name="sex" style="border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
-                   <option value="1" selected>已发货</option>
-                   <option value="0">待发货</option>
+                   <select name="status" style="border: 1px solid;border-color: #4F97E9;margin-left: -3px;margin-top: 5px">
+                       <?php $status=set_value('status');?>
+                       <option value="1" <?php if($status==1) echo 'selected'?>>已发货</option>
+                       <option value="0" <?php if($status==0) echo 'selected'?>>待发货</option>
                </select>
                </li>
                <li>
@@ -140,17 +175,19 @@
         });
 
         $('#price').blur(function() {
-         //   if(this.value=='') this.val(0);
-         //   if($('#quantity').value=='') $('#quantity').val(0);
-            var price=this.value;
-            var quantity=$('#quantity').value;
+            setMoneyValue();
+        });
 
-            if(isNaN(price)&&isNaN(quantity)){
-                var money=price*quantity;
-                $('#money').val(money);
-            }
-
-
+        $('#quantity').blur(function() {
+            setMoneyValue();
+        });
+        $('#deliverDate').focus(function () {
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth()+1;
+            var day = date.getDate();
+            var curdate=year+'-'+month+"-"+day;
+            this.value=curdate;
         });
 
     })
@@ -206,8 +243,16 @@
             data: 'tableName='+tableName+"&"+where,
             dataType: "json",
             success: function(msg){
+                var sex=msg[0].sex;
+                if(sex=='女'){
+                    sex='女士';
+                }else {
+                    sex='先生';
+                }
                 $('#address').val(msg[0].address);
                 $('#phoneNo').val(msg[0].phoneNo);
+                $('#span_sex').html(sex);
+                $('#sex').val(sex);
             },
             error:function(msg){
                 alert('请求发生错误');
@@ -252,7 +297,12 @@
             }
         });
     }
-
+    function setMoneyValue() {
+        var price=parseFloat($('#price').attr('value'));//转成浮点数
+        var quantity=parseFloat($('#quantity').attr('value'));
+        var money=price*quantity;
+        $('#money').val(money);
+    }
 
 
 </script>

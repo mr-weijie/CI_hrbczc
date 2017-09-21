@@ -127,3 +127,10 @@ div{ margin: 0 auto;}
 .rec .pages a{margin-left: 10px}
 /*end新闻列表部分CSS*/
 
+.con-deliver{width: 988px;height: auto;border: 1px solid;border-color: #cbcbcb;padding: 5px;overflow: auto}
+.con-deliver ul{padding-left: 0px;}
+.con-deliver li{ margin-top: 0px;margin-top: 2px;}
+.con-deliver ul li span{height: 20px;line-height: 20px;padding-left: 10px;display: inline-block;float: left}
+.rec .total{width: 300px;height: 30px;line-height: 30px;float: left}
+.rec .pages{width: 420px;height: 30px;line-height: 30px;float: left}
+.rec .pages a{margin:5px}

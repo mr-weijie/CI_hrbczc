@@ -19,10 +19,49 @@ class Admin extends MY_Controller{
     public function index(){//============
         $this->load->view('admin/index.html');
     }
-    public function adm(){//============
-        $this->load->view('admin/index.html');
+    public function about(){
+        $data['menuName']='关于我们';
+        $data['base_url']='admin/about/';
+        $data['tablename']='childmenu';
+        $data['class']='about';
+        $this->editmenu($data);
+    }
+    public function productscenter(){
+        $data['menuName']='产品中心';
+        $data['base_url']='admin/productscenter/';
+        $data['tablename']='childmenu';
+        $data['class']='productscenter';
+        $this->editmenu($data);
+    }
+    public function selectedcases(){
+        $data['menuName']='精选案例';
+        $data['base_url']='admin/selectedcases/';
+        $data['tablename']='childmenu';
+        $data['class']='selectedcases';
+        $this->editmenu($data);
+    }
+    public function technologies(){
+        $data['menuName']='研发技术';
+        $data['base_url']='admin/technologies/';
+        $data['tablename']='childmenu';
+        $data['class']='technologies';
+        $this->editmenu($data);
+    }
+
+
+
+    public function editmenu($data){
+        $parms['base_url']=$data['base_url'];
+        $parms['tablename']=$data['tablename'];
+        $parms['class']=$data['class'];
+        $parms['html']='admin/menulist.html';
+        $parms['where']=array('menuName'=>$data['menuName']);
+        $this->listinfo($parms);
 
     }
+
+
+
     public function welcome(){
         $this->load->view('admin/welcome.html');
     }
@@ -132,6 +171,7 @@ class Admin extends MY_Controller{
         $data['offset']=$pstart.'-'.$pstop;
         $data['class']=$parms['class'];
         $data['tablename']=$parms['tablename'];
+       // p($data['info']);
         $this->load->view('admin/header.html',$data);
         $this->load->view($parms['html']);
         $this->load->view('admin/footer.html');
@@ -479,6 +519,7 @@ class Admin extends MY_Controller{
         $data['title']='新增发货信息';
         $data['province']=$this->database->getrecords('provinces',array());
         $data['goods']=$this->database->getrecords('goods',array());
+        $data['logistics']=$this->database->getrecords('logistics',array());
         $this->load->view('admin/adddeliver.html',$data);
         $this->load->view('admin/footer.html');
     }
@@ -492,7 +533,10 @@ class Admin extends MY_Controller{
             }
         }else{
             $this->load->helper('form');//加载显示表单错误类
-            $this->load->view('admin/adddeliver.html');
+            $data['province']=$this->database->getrecords('provinces',array());
+            $data['goods']=$this->database->getrecords('goods',array());
+            $data['logistics']=$this->database->getrecords('logistics',array());
+            $this->load->view('admin/adddeliver.html',$data);
             $this->load->view('admin/footer.html');
         }
     }
@@ -500,6 +544,9 @@ class Admin extends MY_Controller{
         $this->load->library('form_validation');
         $rowid=$this->uri->segment(3);
         $data['record']=$this->database->getrecord('delivers',$rowid);
+        $data['province']=$this->database->getrecords('provinces',array());
+        $data['goods']=$this->database->getrecords('goods',array());
+        $data['logistics']=$this->database->getrecords('logistics',array());
         $this->load->view('admin/editdeliver.html',$data);
         $this->load->view('admin/footer.html');
     }
@@ -523,18 +570,24 @@ class Admin extends MY_Controller{
     public function get_delivers_data(){
         $this->load->library('form_validation');
         $this->form_validation->set_rules('clientName',"客户名称",'required');
+        $this->form_validation->set_rules('address',"收货地址",'required');
         $this->form_validation->set_rules('phoneNo',"联系电话",'required');
         $this->form_validation->set_rules('goodsName',"商品名称",'required');
+        $this->form_validation->set_rules('quantity',"发货数量",'required');
+        $this->form_validation->set_rules('price',"商品单价",'required');
         $status=$this->form_validation->run();
         if(!$status){
             return false;
         }
         $clientName=$this->input->post('clientName');
-        $province=$this->input->post('province');
+        $sex=$this->input->post('sex');
+        $provinceId=$this->input->post('province');
+        $province=$this->database->getProviceName($provinceId);
         $city=$this->input->post('city');
         $address=$this->input->post('address');
         $phoneNo=$this->input->post('phoneNo');
         $goodsName=$this->input->post('goodsName');
+        $specification=$this->input->post('specification');
         $unit=$this->input->post('unit');
         $price=$this->input->post('price');
         $quantity=$this->input->post('quantity');
@@ -548,11 +601,13 @@ class Admin extends MY_Controller{
         $data=array(
             'rowid'=>strtoupper(md5($logisticsName.date("Y-m-d H:i:s"))),//采用系统时间+IdentityID的方法
             'clientName'=>$clientName,
+            'sex'=>$sex,
             'province'=>$province,
             'city'=>$city,
             'address'=>$address,
             'phoneNo'=>$phoneNo,
             'goodsName'=>$goodsName,
+            'specification'=>$specification,
             'unit'=>$unit,
             'price'=>$price,
             'quantity'=>$quantity,
@@ -573,8 +628,10 @@ class Admin extends MY_Controller{
         $this->load->library('form_validation');
         $tablename=$this->uri->segment(3);
         $rowid=$this->uri->segment(4);
+        $url=$this->uri->segment(5);
         $data['record']=$this->database->getrecord($tablename,$rowid);
         $data['tablename']=$tablename;
+        if(isset($url)) $data['url']=$url;
         switch ($tablename){
             case 'news':
                 $data['title0']='新闻标题';
@@ -643,7 +700,8 @@ class Admin extends MY_Controller{
     public function updaterecord(){
         $rowid=$this->input->post('rowid');
         $tablename=$this->input->post('tablename');
-        $url=$tablename;
+        $url=$this->input->post('url');
+        if (strlen($url )==0)$url=$tablename;
         $this->load->library('form_validation');
         $this->form_validation->set_rules('title',"标题",'required');
         $this->form_validation->set_rules('content',"内容",'required');
@@ -651,10 +709,13 @@ class Admin extends MY_Controller{
         if($status){
             $data=array(
                 'title'=>$this->input->post('title'),
-                'profile'=>$this->input->post('profile'),
                 'content'=>$_POST['content'],//此处不能采用CI自带的输入模块，否则有些style属性被自动替换成xss=removed
                 'modDate'=>time()
             );
+            if($tablename=='sysinfo'){
+                $data['profile']=$this->input->post('profile');
+            }
+
             $status=$this->database->updaterecord($tablename,$rowid,$data);
             if($status)
             {

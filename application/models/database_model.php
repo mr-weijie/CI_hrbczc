@@ -100,6 +100,15 @@ class Database_model extends CI_Model{
         return $data;
 
     }
+    public function getProviceName($provinceId){
+        $data=$this->db->select('province')->where(array('provinceId'=>$provinceId))->get('provinces')->result_array();
+        $provinceName=$data[0]['province'];
+        return $provinceName;
+    }
+    public function getlastdelivers(){
+        $data=$this->db->select('rowid,province,city,clientName,sex,phoneNo,goodsName,status')->limit(100)->get('delivers')->result_array();
+        return $data;
+    }
 
 
 

@@ -1,0 +1,47 @@
+<div class="con-deliver">
+    <ul style="width: 990px;height: auto;overflow: auto ">
+        <li >
+            <span style="width: 30px;background-color: #4F97E9;color: #FFFFFF">省份</span>
+            <span style="width: 30px;background-color: #4F97E9;color: #FFFFFF">城市</span>
+            <span style="width: 60px;background-color: #4F97E9;color: #FFFFFF">客户姓名</span>
+            <span style="width: 120px; background-color: #4F97E9;color: #FFFFFF">电话</span>
+            <span style="width: 120px; background-color: #4F97E9;color: #FFFFFF">商品名称</span>
+            <span style="width: 60px; background-color: #4F97E9;color: #FFFFFF">规格</span>
+            <span style="width: 30px;background-color: #4F97E9;color: #FFFFFF">单位</span>
+            <span style="width: 30px;background-color: #4F97E9;color: #FFFFFF">数量</span>
+            <span style="width: 60px;background-color: #4F97E9;color: #FFFFFF">物流名称</span>
+            <span style="width: 150px;background-color: #4F97E9;color: #FFFFFF">运单号</span>
+            <span style="width: 80px;background-color: #4F97E9;color: #FFFFFF">发货日期</span>
+            <span style="width: 50px;background-color: #4F97E9;color: #FFFFFF">状态</span>
+        </li>
+        <?php foreach($info as $item):
+             $clientName= chinesesubstr($item['clientName'],0,1).$item['sex'];
+             $phoneNo=$item['phoneNo'];
+             if(strlen($phoneNo)>=11){
+                     $phoneNo=substr($phoneNo,0,4).'****'.substr($phoneNo,8);
+                }else {
+                    $phoneNo=substr($phoneNo,0,6).'****';
+                }
+             ?>
+
+        <li style="float: left;overflow: hidden">
+            <span style="width: 30px;"><?php echo $item['province'] ?></span>
+            <span style="width: 30px;"><?php echo $item['city'] ?></span>
+            <span style="width: 60px;"><?php echo  $clientName ?></span>
+            <span style="width: 120px;"><?php echo $phoneNo ?></span>
+            <span style="width: 120px;"><?php echo $item['goodsName'] ?></span>
+            <span style="width: 60px; "><?php echo $item['specification'] ?></span>
+            <span style="width: 30px; "><?php echo $item['unit'] ?></span>
+            <span style="width: 30px; "><?php echo $item['quantity'] ?></span>
+            <span style="width: 60px; "><?php echo $item['logisticsName'] ?></span>
+            <span style="width: 150px;"><?php echo $item['waybillNo'] ?></span>
+            <span style="width: 80px; "><?php echo $item['deliverDate'] ?></span>
+            <span style="width: 50px;"><?php echo ($item['status']==1)?'已发货':'待发货' ?></span>
+        </li>
+        <?php endforeach;?>
+        <li class="rec">
+            <div class="total">共 <?php echo $total_rows ?> 条 显示第 <?php echo isset($cur_page) ?$cur_page:1 ?> 页 <?php echo $offset ?> 条</div>
+            <div class="pages"><?php echo $links ?></div>
+        </li>
+    </ul>
+</div>

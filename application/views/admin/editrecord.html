@@ -20,10 +20,11 @@
     <div>
         <?php
         $tablename=isset($tablename)?$tablename:set_value('tablename');
+        $url=isset($url)?$url:set_value('url');
         $rowid=isset($record[0]['rowid'])?$record[0]['rowid']:set_value('rowid');
         $pics=isset($record[0]['pics'])?$record[0]['pics']:set_value('pics');
         ?>
-        <?php if($tablename!='news') {?>
+        <?php if($tablename!='news'&&$tablename!='childmenu') {?>
             <ul>
                 <li>
                     <form enctype="multipart/form-data" method="post" name="upform" action="<?php echo site_url('admin/uploadpic')?>">
@@ -40,7 +41,7 @@
 
           <form name="form1" method="post" action="<?php echo site_url('admin/updaterecord')?>">
            <ul>
-          <?php if($tablename!='news') {?>
+          <?php if($tablename!='news'&&$tablename!='childmenu') {?>
                <li style=" width: 720px; text-align: center;">
                    <img src="<?php echo base_url('assets/images/'.$pics)?>">
                    <input type="hidden" name="pics" value="<?php echo $pics?>">
@@ -68,6 +69,7 @@
             <div style="width:820px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 105px;clear: both;text-align: center;">
                 <input type="hidden" name="rowid" value="<?php echo isset($record[0]['rowid'])?$record[0]['rowid']:set_value('rowid')?>">
                 <input type="hidden" name="tablename" value="<?php echo $tablename?>">
+                <input type="hidden" name="url" value="<?php echo $url?>">
                 <input type="submit" name="submit" value="提交">
             </div>
         </form>
