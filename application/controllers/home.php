@@ -164,16 +164,57 @@ class Home extends CI_Controller {
     public function companynews(){
         $parms['base_url']='home/companynews/';
         $parms['tablename']='news';
-        $parms['html']='index/infolist.html';
+        $parms['html']='index/newscenterlist.html';
         $parms['newstype']='company';
         $this->listinfo($parms);
     }
     public function industrynews(){
         $parms['base_url']='home/industrynews/';
         $parms['tablename']='news';
-        $parms['html']='index/infolist.html';
+        $parms['html']='index/newscenterlist.html';
         $parms['newstype']='industry';
         $this->listinfo($parms);
+    }
+    public function leavingmsg(){
+        $data=$this->database->get_menu_data();
+        $data['sysinfo']=$this->database->getsysinfo();
+        $this->load->view('header.html',$data);
+        $this->load->view('index/nav.html');
+        $this->load->view('index/ad.html');
+        $this->load->view('index/leavingmsg.html');
+        $this->load->view('copyright.html');
+        $this->load->view('footer.html');
+
+    }
+    public function insertleavingmsg(){
+        $clientName=$this->input->post('clientName');
+        $phoneNo=$this->input->post('phoneNo');
+        $email=$this->input->post('email');
+        $qq=$this->input->post('qq');
+        $content=$this->input->post('content');
+        $data=array(
+            'clientName'=>$clientName,
+            'phoneNo'=>$phoneNo,
+            'email'=>$email,
+            'qq'=>$qq,
+            'content'=>$content,
+            'modDate'=>time()
+        );
+        $status=$this->database->insert_record('leavingmsg',$data);
+        if($status){
+            $msg='新增记录成功！';
+            success('home/leavingmsg', $msg);
+        }else{
+            $this->load->helper('form');//加载显示表单错误类
+            $this->load->view('header.html');
+            $this->load->view('index/nav.html');
+            $this->load->view('index/ad.html');
+            $this->load->view('index/leavingmsg.html');
+            $this->load->view('copyright.html');
+            $this->load->view('footer.html');
+        }
+
+
     }
 
 
@@ -237,6 +278,13 @@ class Home extends CI_Controller {
         $html=$parms['html'];
 
         $data['sysinfo']=$this->database->getsysinfo();
+        if($parms['tablename']=='news'){
+            $data['TypeName']='新闻中心';
+            $data['TypeEName']='News Center';
+            $data['projects']=$this->database->get_menu('新闻中心');
+            $data['newstype']=$parms['newstype'];
+
+        }
         $this->load->view('header.html',$data);
         $this->load->view('index/nav.html');
         $this->load->view('index/ad.html');

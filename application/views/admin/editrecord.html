@@ -20,6 +20,7 @@
     <div>
         <?php
         $tablename=isset($tablename)?$tablename:set_value('tablename');
+        $newstype=isset($record[0]['newstype'])?$record[0]['newstype']:set_value('newstype');
         $url=isset($url)?$url:set_value('url');
         $rowid=isset($record[0]['rowid'])?$record[0]['rowid']:set_value('rowid');
         $pics=isset($record[0]['pics'])?$record[0]['pics']:set_value('pics');
@@ -53,6 +54,15 @@
                     <input type="hidden" name="title0" value="<?php echo isset($title0)?$title0:set_value('title0') ?>">
                 </li>
                <?php echo form_error('title', '<li class="err">', '</li>') ?>
+            <?php if($tablename=='news'){?>
+               <li>新闻类别:
+                   <select name="newstype">
+                       <option value="company" <?php if($newstype=='company') echo 'selected' ?>>公司新闻</option>
+                       <option value="industry" <?php if($newstype=='industry') echo 'selected' ?>>行业新闻</option>
+                   </select>
+               </li>
+               <?php }?>
+
                <?php echo form_error('content', '<li class="err">', '</li>') ?>
                 <li>
                     <span style="float: left; clear: both">

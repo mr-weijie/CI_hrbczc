@@ -5,15 +5,17 @@
             <span style="width: 560px;background-color: #4F97E9;">项目名称</span>
             <span style="width: 80px;background-color: #4F97E9;text-align: center"><a href="<?php echo site_url('admin/add'.$class) ?>">新增</a></span>
         </li>
-        <?php foreach($info as $item):?>
+        <?php foreach($info as $item):
+            if($item['type']!='proc'){
+        ?>
         <li>
             <span style="width: 560px;"><?php echo $item['title'] ?></span>
             <span >
                 <a href="<?php echo site_url('admin/editrecord/'.$tablename.'/'.$item['rowid'].'/'.$class) ?>">编辑</a>&nbsp;&nbsp;
-                <a href="<?php echo site_url('admin/deleterecord/'.$tablename.'/'.$item['rowid']) ?>">删除</a>
+                <a href="<?php echo site_url('admin/deleterecord/'.$tablename.'/'.$item['rowid'].'/'.$class) ?>">删除</a>
             </span>
         </li>
-        <?php endforeach;?>
+        <?php }endforeach;?>
         <li class="rec">
             <div class="total">共 <?php echo $total_rows ?> 条 显示第 <?php echo isset($cur_page) ?$cur_page:1 ?> 页 <?php echo $offset ?> 条</div>
             <div class="pages"><?php echo $links ?></div>

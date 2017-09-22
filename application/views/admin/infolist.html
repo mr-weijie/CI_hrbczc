@@ -1,18 +1,31 @@
 <div class="flash_side">
 <div class="con">
-    <ul style="width: 830px;height: auto;overflow: auto ">
+    <ul style="width: 890px;height: auto;overflow: auto ">
         <li style="background-color: #009900">
             <span style="width: 560px;background-color: #4F97E9;">标题</span>
+            <?php if($tablename=='news'){ ?>
+            <span style="width: 60px;background-color: #4F97E9;">新闻类别</span>
+            <?php }?>
             <span style="width: 100px;background-color: #4F97E9;">发表时间</span>
             <span style="width: 80px;background-color: #4F97E9;text-align: center"><a href="<?php echo site_url('admin/add'.$class) ?>">新增</a></span>
         </li>
         <?php foreach($info as $item):?>
         <li>
             <span style="width: 560px;"><?php echo $item['title'] ?></span>
+            <?php if($tablename=='news'){
+                $newstype=$item['newstype'];
+                if($newstype=='company'){
+                    $newstype='公司新闻';
+                }else{
+                    $newstype='行业新闻';
+                }
+            ?>
+            <span style="width: 60px;"><?php echo $newstype ?></span>
+            <?php }?>
             <span style="width: 100px"><?php echo date('Y-m-d',$item['modDate'])?></span>
             <span >
                 <a href="<?php echo site_url('admin/editrecord/'.$tablename.'/'.$item['rowid']) ?>">编辑</a>&nbsp;&nbsp;
-                <a href="<?php echo site_url('admin/deleterecord/'.$tablename.'/'.$item['rowid']) ?>">删除</a>
+                <a href="<?php echo site_url('admin/deleterecord/'.$tablename.'/'.$item['rowid']); ?>">删除</a>
             </span>
         </li>
         <?php endforeach;?>

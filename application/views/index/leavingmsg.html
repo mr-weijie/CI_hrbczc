@@ -1,0 +1,31 @@
+<div class="show-con">
+    <div class="show-left">
+        <div class="show-title">
+            <ul>
+                <li >联系我们</li>
+                <li >Contact Us</li>
+            </ul>
+        </div>
+        <div class="project">
+            <ul>
+                <li class="project-title">商务留言</li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="leavingmgs">
+        <div style="width: 730px;height: 500px;margin-left: 10px;float: left;background-color: #d9edf7">
+            <form name="form1" method="post" action="<?php echo site_url('home/insertleavingmsg')?>">
+                <ul style="width: 600px; margin-left: 20px;float: left;margin-top: 20px">
+                    <li style="height: 35px;line-height: 35px;float: none">您的尊名：<input type="text" name="clientName"></li>
+                    <li style="height: 35px;line-height: 35px;float: none">您的电话：<input type="text" name="phoneNo"></li>
+                    <li style="height: 35px;line-height: 35px;float: none">您的邮箱：<input type="text" name="email"></li>
+                    <li style="height: 35px;line-height: 35px;float: none">&nbsp;&nbsp;您的QQ：<input type="text" name="qq"></li>
+                    <li style="height:auto;overflow:auto;line-height: 35px;float: none;position: absolute"><span style="position: relative; top: -165px">您的留言：</span><textarea name="content" cols="50" rows="10" style=""></textarea> </li>
+                    <li style="width: 500px; height: 30px;line-height: 30px;text-align: center;position: relative;top: 200px;"><input type="submit" name="submit" value="提交"></li>
+                </ul>
+
+            </form>
+        </div>
+    </div>
+</div>

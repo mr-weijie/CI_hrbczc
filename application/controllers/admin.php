@@ -47,8 +47,56 @@ class Admin extends MY_Controller{
         $data['class']='technologies';
         $this->editmenu($data);
     }
+    public function contact(){
+        $data['menuName']='联系我们';
+        $data['base_url']='admin/contact/';
+        $data['tablename']='childmenu';
+        $data['class']='contact';
+        $this->editmenu($data);
+    }
+    public function addabout(){
+        $data['url']='admin/about';
+        $data['menuName']='关于我们';
+        $data['class']='about';
+        $this->addmenu($data);
+    }
+    public function addproductscenter(){
+        $data['url']='admin/productscenter';
+        $data['menuName']='产品中心';
+        $data['class']='productscenter';
+        $this->addmenu($data);
+    }
+    public function addselectedcases(){
+        $data['url']='admin/selectedcases';
+        $data['menuName']='精选案例';
+        $data['class']='selectedcases';
+        $this->addmenu($data);
+    }
+    public function addtechnologies(){
+        $data['url']='admin/technologies';
+        $data['menuName']='研发技术';
+        $data['class']='technologies';
+        $this->addmenu($data);
+    }
+    public function addcontact(){
+        $data['url']='admin/contact';
+        $data['menuName']='联系我们';
+        $data['class']='contact';
+        $this->addmenu($data);
+    }
 
+    public function addmenu($data){
+        $this->load->library('form_validation');
+        $parms['title0']='项目标题';
+        $parms['title1']='项目内容';
+        $parms['tablename']='childmenu';
+        $parms['url']=$data['url'];
+        $parms['menuName']=$data['menuName'];
+        $parms['class']=$data['class'];
+        $this->load->view('admin/addrecord.html',$parms);
+        $this->load->view('admin/footer.html');
 
+    }
 
     public function editmenu($data){
         $parms['base_url']=$data['base_url'];
@@ -667,10 +715,18 @@ class Admin extends MY_Controller{
                 'rowid'=>strtoupper(md5($title.date("Y-m-d H:i:s"))),//采用系统时间+IdentityID的方法
                 'title'=>$title,
                 'content'=>$content,
-                'author'=>$this->session->userdata('author'),
-                'addDate'	=> time(),
-                'modDate'	=> time()
+                'modDate'=>time()
             );
+            if($tablename=='childmenu'){
+                $data['menuName']=$this->input->post('menuName');
+                $data['class']=$this->input->post('class');
+            }
+            if($tablename!='childmenu'){
+                $data['author']=$this->session->userdata('author');
+                $data['addDate']=time();
+            }
+            $newstype=$this->input->post('newstype');
+            if(strlen($newstype)>0) $data['newstype']=$newstype;
             $status=$this->database->insert_record($tablename,$data);
             if($status){
                 $msg='新增记录成功！';
@@ -687,8 +743,10 @@ class Admin extends MY_Controller{
     public function deleterecord(){
         $tablename=$this->uri->segment(3);
         $rowid=$this->uri->segment(4);
+        $url=$this->uri->segment(5);
         $status=$this->database->deleterecord($tablename,$rowid);
-        $url='admin/'.$tablename;
+        if(strlen($url)==0)   $url=$tablename;
+        $url='admin/'.$url;
         if($status)
         {
             success($url,'记录删除成功！');
@@ -714,6 +772,9 @@ class Admin extends MY_Controller{
             );
             if($tablename=='sysinfo'){
                 $data['profile']=$this->input->post('profile');
+            }
+            if($tablename=='news'){
+                $data['newstype']=$this->input->post('newstype');
             }
 
             $status=$this->database->updaterecord($tablename,$rowid,$data);
