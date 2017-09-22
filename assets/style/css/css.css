@@ -137,3 +137,4 @@ div{ margin: 0 auto;}
 
 .leavingmgs input{border: 1px solid;border-color: #1094fa}
 .leavingmgs textarea{border: 1px solid;border-color: #1094fa}
+.err {color: #ff0000;float: none}

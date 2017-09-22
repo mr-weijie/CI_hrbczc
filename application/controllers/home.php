@@ -176,6 +176,7 @@ class Home extends CI_Controller {
         $this->listinfo($parms);
     }
     public function leavingmsg(){
+        $this->load->helper('form');//加载显示表单错误类
         $data=$this->database->get_menu_data();
         $data['sysinfo']=$this->database->getsysinfo();
         $this->load->view('header.html',$data);
@@ -187,32 +188,57 @@ class Home extends CI_Controller {
 
     }
     public function insertleavingmsg(){
-        $clientName=$this->input->post('clientName');
-        $phoneNo=$this->input->post('phoneNo');
-        $email=$this->input->post('email');
-        $qq=$this->input->post('qq');
-        $content=$this->input->post('content');
-        $data=array(
-            'clientName'=>$clientName,
-            'phoneNo'=>$phoneNo,
-            'email'=>$email,
-            'qq'=>$qq,
-            'content'=>$content,
-            'modDate'=>time()
-        );
-        $status=$this->database->insert_record('leavingmsg',$data);
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('clientName',"留言人尊名",'required');
+        $this->form_validation->set_rules('phoneNo',"电话号码",'required');
+        $this->form_validation->set_rules('email',"电子邮箱",'valid_email');
+        $this->form_validation->set_rules('content',"留言内容",'required|max_length[200]');
+        $this->form_validation->set_rules('captcha',"验证码",'required');
+        $status=$this->form_validation->run();
         if($status){
-            $msg='新增记录成功！';
-            success('home/leavingmsg', $msg);
+            $captcha=strtoupper($this->input->post('captcha'));
+
+            if(!isset($_SESSION)){
+                session_start();//开启session,只有开启session后，所有session操作才能有效
+            }
+            if($captcha!=$_SESSION ['code']){
+                error('验证码错误！');
+            }
+
+            $clientName=$this->input->post('clientName');
+            $phoneNo=$this->input->post('phoneNo');
+            $email=$this->input->post('email');
+            $qq=$this->input->post('qq');
+            $content=$this->input->post('content');
+            $data=array(
+                'rowid'=>strtoupper(md5($clientName.date("Y-m-d H:i:s"))),//采用系统时间+IdentityID的方法
+                'clientName'=>$clientName,
+                'phoneNo'=>$phoneNo,
+                'email'=>$email,
+                'qq'=>$qq,
+                'content'=>$content,
+                'modDate'=>time()
+            );
+            $status=$this->database->insert_record('leavingmsg',$data);
+            if($status){
+                $msg='新增记录成功！';
+                success('home/leavingmsg', $msg);
+            }else{
+                error('对不起，留言失败!');
+            }
         }else{
+            $data=$this->database->get_menu_data();
+            $data['sysinfo']=$this->database->getsysinfo();
             $this->load->helper('form');//加载显示表单错误类
-            $this->load->view('header.html');
+            $this->load->view('header.html',$data);
             $this->load->view('index/nav.html');
             $this->load->view('index/ad.html');
             $this->load->view('index/leavingmsg.html');
             $this->load->view('copyright.html');
             $this->load->view('footer.html');
+
         }
+
 
 
     }
@@ -293,5 +319,18 @@ class Home extends CI_Controller {
         $this->load->view('footer.html');
     }
 
+    public function captcha(){
+        $config=array(
+            'width'=>80,
+            'height'=>30,
+            'codeLen'=>4,
+            'fontSize'=>18,
+            'bgColor' =>'',
+            'fontColor'=> ''
+        );
+        $this->load->library('code',$config);//加载自定义的验证码库
+        $this->code->show();
+        //  var_dump($_SESSION);
+    }
 }
 ?>

@@ -846,14 +846,6 @@ class Admin extends MY_Controller{
 
 
 
-
-
-
-
-
-
-
-
     public function modifypwd(){
         $this->load->library('form_validation');//加载表单验证类库
         $this->load->view('admin/modifypwd.html');
