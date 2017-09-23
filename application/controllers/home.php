@@ -117,7 +117,7 @@ class Home extends CI_Controller {
         if(strlen($rowid)!=32){
             error('参数错误');
         }
-        $data['displayInfo']=$this->database->getDisplayInfo($tablename,$rowid);
+        $data['displayInfo']=$this->database->getrecord($tablename,$rowid);
         $data['displayInfo']=$data['displayInfo'][0]['profile'];
         $this->load->view('header.html',$data);
         $this->load->view('index/nav.html');
@@ -136,7 +136,7 @@ class Home extends CI_Controller {
         if(strlen($rowid)!=32){
             error('参数错误');
         }
-        $data['displayInfo']=$this->database->getDisplayInfo($tablename,$rowid);
+        $data['displayInfo']=$this->database->getrecord($tablename,$rowid);
         $this->load->view('header.html',$data);
         $this->load->view('index/nav.html');
         $this->load->view('index/ad.html');
@@ -219,10 +219,10 @@ class Home extends CI_Controller {
                 'content'=>$content,
                 'modDate'=>time()
             );
-            $status=$this->database->insert_record('leavingmsg',$data);
+            $status=$this->database->insert_record('leavingmsgs',$data);
             if($status){
-                $msg='新增记录成功！';
-                success('home/leavingmsg', $msg);
+                $msg='非常您的留言，我们工作人员会尽快处理！';
+                success('home', $msg);
             }else{
                 error('对不起，留言失败!');
             }
@@ -308,7 +308,7 @@ class Home extends CI_Controller {
             $data['TypeName']='新闻中心';
             $data['TypeEName']='News Center';
             $data['projects']=$this->database->get_menu('新闻中心');
-            $data['newstype']=$parms['newstype'];
+            if(isset($parms['newstype']))   $data['newstype']=$parms['newstype'];
 
         }
         $this->load->view('header.html',$data);

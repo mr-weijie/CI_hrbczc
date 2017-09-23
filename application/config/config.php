@@ -26,6 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //$config['base_url'] ='';端口是80时，可以这样写
 $realIP=gethostbyname(gethostname());
 $config['base_url'] = 'http://'.$realIP.':8082';
+//$config['base_url'] = 'http://www.86fxw.com/hrbczc';
 
 /*
 |--------------------------------------------------------------------------
@@ -226,7 +227,7 @@ $config['allow_get_array'] = TRUE;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 1;
+$config['log_threshold'] = 0;
 
 /*
 |--------------------------------------------------------------------------

@@ -108,8 +108,6 @@ class Admin extends MY_Controller{
 
     }
 
-
-
     public function welcome(){
         $this->load->view('admin/welcome.html');
     }
@@ -123,7 +121,7 @@ class Admin extends MY_Controller{
 
     public function sysinfo(){//==============
         $data['sysinfo']=$this->database->getsysinfo();
-        $data['title']='Flash动画设置';
+        $data['title']='系统参数设置';
         $this->load->view('admin/header.html',$data);
         $this->load->view('admin/sysinfo.html');
         $this->load->view('admin/footer.html');
@@ -242,10 +240,6 @@ class Admin extends MY_Controller{
         $this->load->view('admin/addrecord.html',$data);
         $this->load->view('admin/footer.html');
     }
-
-
-
-
     public function products(){
         $parms['base_url']='admin/products/';
         $parms['tablename']='products';
@@ -253,7 +247,6 @@ class Admin extends MY_Controller{
         $parms['html']='admin/infolist.html';
         $this->listinfo($parms);
     }
-
     public function addproduct(){
         $this->load->library('form_validation');
         $data['title0']='产品标题';
@@ -263,9 +256,6 @@ class Admin extends MY_Controller{
         $this->load->view('admin/addrecord.html',$data);
         $this->load->view('admin/footer.html');
     }
-
-
-
     public function cases(){
         $parms['base_url']='admin/cases/';
         $parms['tablename']='cases';
@@ -671,6 +661,40 @@ class Admin extends MY_Controller{
         return $data;
     }
 
+    public function leavingmsgs(){
+        $parms['base_url']='admin/leavingmsgs/';
+        $parms['tablename']='leavingmsgs';
+        $parms['class']='leavingmsgs';
+        $parms['html']='admin/msglist.html';
+        $this->listinfo($parms);
+
+    }
+    public function setreadstatus(){
+        $rowid=$this->uri->segment(3);
+        $data=array(
+            'status'=>1
+        );
+        $status=$this->database->updaterecord('leavingmsgs',$rowid,$data);
+        $data=array(
+            'status'=>0
+        );
+        if($status){
+            $data['status']=1;
+        }
+        $this->output->set_header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($data);
+
+
+    }
+    public function showusrmsg(){
+        $rowid=$this->uri->segment(3);
+        $data['info']=$this->database->getrecord('leavingmsgs',$rowid);
+        if(strlen($rowid)!=32){
+            error('参数错误');
+        }
+        $this->load->view('admin/usrmsg.html',$data);
+
+    }
 
     public function editrecord(){
         $this->load->library('form_validation');
@@ -842,10 +866,6 @@ class Admin extends MY_Controller{
 
     }
 
-
-
-
-
     public function modifypwd(){
         $this->load->library('form_validation');//加载表单验证类库
         $this->load->view('admin/modifypwd.html');
@@ -865,7 +885,6 @@ class Admin extends MY_Controller{
             $usrid=$this->session->userdata('usrid');
             $pwd0=$this->input->post('passwd');
             $data=$this->database->chkuser($usrid,$pwd0);
-            p($data);
             if(empty($data)){
                 error('原密码错误，密码修改操作失败');
             }else{
@@ -877,7 +896,7 @@ class Admin extends MY_Controller{
                 $status=$this->database->update_pwd($usrid,$data);
                 if($status)
                 {
-                    $url='admin';
+                    $url='admin/welcome';
                     success($url,'密码修改成功！');
                 }else{
                     error('密码修改失败！');

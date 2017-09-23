@@ -14,7 +14,7 @@ class MY_Controller extends CI_Controller{
         $usrid=$this->session->userdata('usrid');//取出session类的中数据
         $usrname=$this->session->userdata('usrname');
         if(!($usrid||$usrname)){
-         //   redirect('login');//直接跳转到登录页面
+            redirect('login');//直接跳转到登录页面
         }
 
 

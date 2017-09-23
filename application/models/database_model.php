@@ -42,11 +42,6 @@ class Database_model extends CI_Model{
         return $status;
 
     }
-    public function getDisplayInfo($tablename,$rowid){
-        $data=$this->db->where(array('rowid'=>$rowid))->get($tablename)->result_array();
-       // p($data);
-        return $data;
-    }
 
     public function getnewslist_top($num){
         $data=$this->db->select('rowid,title,modDate')->limit($num)->order_by('modDate','desc')-> get('news')->result_array();
@@ -111,6 +106,15 @@ class Database_model extends CI_Model{
     }
 
 
+    public function chkuser($usrid,$pwd){
+        $pwd=md5($pwd);
+        $data=$this->db->select('usrname,usrid')->where(array('usrid'=>$usrid,'pwd'=>$pwd))->get('admin')->result_array();
+        return $data;
+    }
+    public function update_pwd($usrid,$data){
+        $status=$this->db->update('admin',$data,array('usrid'=>$usrid));
+        return $status;
+    }
 
 
 

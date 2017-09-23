@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>客户留言</title>
+    <style>
+        body{background-color: aliceblue}
+        li{list-style: none}
+        textarea{border: 1px solid;border-color: #d9edf7;}
+    </style>
+</head>
+<body>
+<div style="width: 660px;height: 400px;">
+       <ul style="width: 600px; margin-left: 20px;float: left;margin-top: 20px">
+            <li style="height: 35px;line-height: 35px;float: none">客户姓名：<?php echo $info[0]['clientName']?></li>
+            <li style="height: 35px;line-height: 35px;float: none">联系电话：<?php echo $info[0]['phoneNo']?></li>
+            <li style="height: 35px;line-height: 35px;float: none">联系邮箱：<?php echo $info[0]['email']?></li>
+            <li style="height: 35px;line-height: 35px;float: none">&nbsp;&nbsp;联系QQ：<?php echo $info[0]['qq']?></li>
+           <li style="height: 35px;line-height: 35px;float: none">留言时间：<?php echo date('Y-m-d H:i:s',$info[0]['modDate'])?></li>
+            <li style="height:auto;overflow:auto;line-height: 35px;float: none;position: absolute"><span style="position: relative; top: -165px">留言内容：</span><textarea name="content" cols="50" rows="10" style=""><?php echo $info[0]['content']?></textarea></li>
+       </ul>
+</div>
+</body>
+</html>

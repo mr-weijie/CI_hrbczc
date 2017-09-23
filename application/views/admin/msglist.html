@@ -1,0 +1,65 @@
+<div class="flash_side">
+<div class="con">
+    <ul style="width: 1210px;height: auto;overflow: auto ">
+        <li >
+            <span style="width: 60px;background-color: #4F97E9;">留言人</span>
+            <span style="width: 100px;background-color: #4F97E9;">联系电话</span>
+            <span style="width: 120px;background-color: #4F97E9;">E-mail</span>
+            <span style="width: 100px;background-color: #4F97E9;">QQ</span>
+            <span style="width:400px;background-color: #4F97E9;">留言内容</span>
+            <span style="width: 140px;background-color: #4F97E9;">留言时间</span>
+            <span style="width: 40px;background-color: #4F97E9;text-align: center">状态</span>
+            <span style="width: 100px;background-color: #4F97E9;text-align: center">操作</span>
+        </li>
+        <?php foreach($info as $item):?>
+        <li class="leavingmsgrec" onmouseover="this.style.backgroundColor='#EBF0F3'" onmouseout="this.style.backgroundColor=body.style.backgroundColor">
+            <span class="leavingmsgname"><?php echo $item['clientName']?></span>
+            <span class="leavingmsgphoneNo"><?php echo $item['phoneNo']?></span>
+            <span class="leavingmsgemail"><?php echo $item['email']?></span>
+            <span class="leavingmsgeQQ"><?php echo $item['qq']?></span>
+            <span class="leavingmsgcontent"><?php echo $item['content']?></span>
+            <span class="leavingmsgdate"><?php echo date('Y-m-d H:i:s',$item['modDate'])?></span>
+            <span class="leavingmsgstatus" id="stat_<?php echo $item['rowid']?>"><?php echo ($item['status']==1)?'已读':'<span style="color:#FF0000">未读</span>'?></span>
+            <span class="leavingmsgaction">
+                <a href="javascript:if(confirm('确实要删除该留言吗?')) location='<?php echo site_url('admin/deleterecord/'.$tablename.'/'.$item['rowid']); ?>'" >删除</a>&nbsp;
+                <?php if($item['status']==0){?>
+                <a href="#" id="act_<?php echo $item['rowid']?>" onclick="setreadstatus('<?php echo $item['rowid']?>')" >已读</a>&nbsp;
+                <?php }?>
+                <a href="#" onclick="javascript:opw('<?php echo site_url('admin/showusrmsg/'.$item['rowid']) ?>')">详情</a>
+            </span>
+        </li>
+        <?php endforeach;?>
+        <li class="rec">
+            <div class="total">共 <?php echo $total_rows ?> 条 显示第 <?php echo isset($cur_page) ?$cur_page:1 ?> 页 <?php echo $offset ?> 条</div>
+            <div class="pages"><?php echo $links ?></div>
+        </li>
+    </ul>
+</div>
+</div>
+<script>
+    function setreadstatus(rowid) {
+        $.ajax({
+            type:'GET',
+            url: '<?php echo site_url("admin/setreadstatus/")?>'+rowid,
+            data: '',
+            dataType: "json",
+            success: function(msg){
+                if(msg.status==1){
+                    $('#stat_'+rowid).html('已读');
+                    document.getElementById('act_'+rowid).style.display='none';
+                }
+
+            },
+            error:function(msg){
+                alert('请求发生错误');
+            }
+        });
+
+    }
+</script>
+<SCRIPT>
+    function opw(url) {
+        window.open (url,'newwindow','height=418,width=670,top=200,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no')
+
+    }
+</SCRIPT>

@@ -17,16 +17,16 @@
         <div style="width: 730px;height: 500px;margin-left: 10px;float: left;background-color: #d9edf7">
             <form name="form1" method="post" action="<?php echo site_url('home/insertleavingmsg')?>">
                 <ul style="width: 600px; margin-left: 20px;float: left;margin-top: 20px">
-                    <li style="height: 35px;line-height: 35px;float: none">您的尊名：<input type="text" name="clientName" value="<?php echo set_value('clientName')?>">**</li><?php echo form_error('clientName', '<li class="err">', '</li>') ?>
-                    <li style="height: 35px;line-height: 35px;float: none">您的电话：<input type="text" name="phoneNo" value="<?php echo set_value('phoneNo')?>">**</li><?php echo form_error('phoneNo', '<li class="err">', '</li>') ?>
+                    <li style="height: 35px;line-height: 35px;float: none">您的尊名：<input type="text" name="clientName" value="<?php echo set_value('clientName')?>"><span style="color: #FF0000">(必填项)**</span></li><?php echo form_error('clientName', '<li class="err">', '</li>') ?>
+                    <li style="height: 35px;line-height: 35px;float: none">您的电话：<input type="text" name="phoneNo" value="<?php echo set_value('phoneNo')?>"><span style="color: #FF0000">(必填项)**</span></li><?php echo form_error('phoneNo', '<li class="err">', '</li>') ?>
                     <li style="height: 35px;line-height: 35px;float: none">您的邮箱：<input type="text" name="email" value="<?php echo set_value('email')?>"></li><?php echo form_error('email', '<li class="err">', '</li>') ?>
                     <li style="height: 35px;line-height: 35px;float: none">&nbsp;&nbsp;您的QQ：<input type="text" name="qq" value="<?php echo set_value('qq')?>"></li><?php echo form_error('content', '<li class="err">', '</li>') ?>
-                    <li style="height:auto;overflow:auto;line-height: 35px;float: none;position: absolute"><span style="position: relative; top: -165px">您的留言：</span><textarea name="content" cols="50" rows="10" style=""><?php echo set_value('content')?></textarea>** </li>
+                    <li style="height:auto;overflow:auto;line-height: 35px;float: none;position: absolute"><span style="position: relative; top: -165px">您的留言：</span><textarea name="content" cols="50" rows="10" style=""><?php echo set_value('content')?></textarea><span style="color: #FF0000">(必填项)**</span> </li>
                     <li style="width: 500px; height: 30px;line-height: 30px;text-align: center;position: relative;top: 200px;">
                             <div style="width: 260px;height: 40px;line-height: 40px;">
                                 验证码：
                                 <input type="text" style="width: 50px;height: 25px;line-height: 25px;position: absolute;top: 10px" name="captcha" value="<?php echo set_value('captcha')?>">
-                                <img src="<?php echo site_url('home/captcha')?>" style="position: relative;top: 8px;left: 60px">
+                                <img id="captchaimg" src="<?php echo site_url('home/captcha')?>" style="position: relative;top: 8px;left: 60px" onclick="this.src='<?php echo site_url('home/captcha/')?>'+Math.random()">
                                 <input type="submit" name="submit" value="提交留言" style="width: 70px;;height: 30px;position: relative;left: 80px">
                             </div><?php echo form_error('captcha', '<div class="usrid" style="color:#FF0000">', '</div>') ?>
 
