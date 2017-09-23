@@ -18,7 +18,10 @@
             <span style="width: 60px"><?php echo $item['city'] ?></span>
             <span style="width: 300px"><?php echo $item['address'] ?></span>
             <span style="width: 150px"><?php echo $item['phoneNo'] ?></span>
-            <span ><a href="<?php echo site_url('admin/editclient/'.$item['rowid']) ?>">编辑</a>&nbsp;&nbsp;<a href="<?php echo site_url('admin/deleterecord/'.$tablename.'/'.$item['rowid']) ?>">删除</a> </span>
+            <span >
+                <a href="<?php echo site_url('admin/editclient/'.$item['rowid']) ?>">编辑</a>&nbsp;&nbsp;
+                <a href="javascript:if(confirm('确实要删除该记录吗?')) location='<?php echo site_url('admin/deleterecord/'.$tablename.'/'.$item['rowid']); ?>'" >删除</a>&nbsp;
+            </span>
         </li>
         <?php endforeach;?>
         <li class="rec">
