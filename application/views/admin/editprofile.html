@@ -33,15 +33,15 @@
 
           <form name="form1" method="post" action="<?php echo site_url('admin/update_profile')?>">
            <ul>
-               <li style=" width: 720px; text-align: center"><img src="<?php echo base_url('assets/images/'.$profile[0]['pics'])?>"></li>
-               <li><span style="float: left; clear: both">公司简介:</span>
+               <li style=" width: 720px;text-align: center;"><img src="<?php echo base_url('assets/images/'.$profile[0]['pics'])?>"></li>
+               <li><span style="float: left; clear: both;height: 550px;">公司简介:</span>
                     <span style="float: left">
                         <textarea name="profile" id="profile" style="width: 818px;height: 300px; border: 1px solid;border-color: #3B96CB;">
                             <?php echo $profile[0]['profile']?>
                         </textarea>
                     </span></li>
             </ul>
-            <div style="width:820px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 65px;clear: both;text-align: center">
+            <div style="width:820px;height: 30px;line-height: 30px;padding-top: 5px;background-color: #3B96CB;margin-left: 85px;clear: both;text-align: center">
                 <input type="hidden" name="rowid" value="<?php echo $profile[0]['rowid']?>">
                 <input type="submit" name="submit" value="提交">
             </div>
