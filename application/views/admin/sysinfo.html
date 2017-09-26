@@ -1,5 +1,5 @@
 <?php
-    $ID         =$sysinfo[0]['ID'];
+    $rowid         =$sysinfo[0]['rowid'];
     $address    =$sysinfo[0]['address'];
     $url        =$sysinfo[0]['url'];
     $corporation=$sysinfo[0]['corporation'];
@@ -13,7 +13,7 @@
         <ul>
         <form name="form1" method="post" action="<?php echo site_url('admin/update_sysinfo') ?>">
             <li>公司名称:<input type="text" name="corporation" class="admin_input_normal" value="<?php echo $corporation ?>"></li>
-            <li>公司地址:<input type="text" name="address" class="admin_input_normal" value="<?php echo $address ?>"><input type="hidden" name="ID" value="<?php echo $ID?>"></li>
+            <li>公司地址:<input type="text" name="address" class="admin_input_normal" value="<?php echo $address ?>"><input type="hidden" name="rowid" value="<?php echo $rowid?>"></li>
             <li>公司网址:<input type="text" name="url" class="admin_input_normal" value="<?php echo $url ?>"></li>
             <li>公司电话:<input type="text" name="phone" class="admin_input_normal" value="<?php echo $phone ?>"></li>
             <li>值班电话:<input type="text" name="servphone" class="admin_input_normal" value="<?php echo $servphone ?>"></li>

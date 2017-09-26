@@ -128,7 +128,7 @@ class Admin extends MY_Controller{
 
     }
     public function update_sysinfo(){//===========
-        $ID=$this->input->post('ID');
+        $rowid=$this->input->post('rowid');
         $data=array(
             'address'      =>$this->input->post('address'),
             'url'          =>$this->input->post('url'),
@@ -137,7 +137,7 @@ class Admin extends MY_Controller{
             'servphone'   =>$this->input->post('servphone'),
             'postcode'     =>$this->input->post('postcode'),
         );
-        $status=$this->database->update_sysinfo($data,$ID);
+        $status=$this->database->update_sysinfo($data,$rowid);
         if($status)
         {
             success('admin/sysinfo','系统参数设置成功！');
