@@ -188,8 +188,6 @@ class Admin extends MY_Controller{
     }
     public function listinfo($parms){
         $this->load->library('pagination');
-        $pageNo=$this->uri->segment(3);
-        $pageNo=isset($pageNo)?$pageNo:1;
         $perpage=20;
         $parms['where']=isset($parms['where'])?$parms['where']:array();
         $config['base_url']=site_url($parms['base_url']);
@@ -210,7 +208,7 @@ class Admin extends MY_Controller{
         $data['info']=$this->database->getrecords($parms['tablename'],$parms['where']);
         $data['links']=$links;
         $data['total_rows']= $config['total_rows'];
-        $data['cur_page']=$offset;
+        $data['cur_page']=$offset/$perpage+1;
         $pstart=$offset+1;
         $pstop=$offset+$perpage;
         $pstop=$pstop>$config['total_rows'] ?$config['total_rows']:$pstop;
